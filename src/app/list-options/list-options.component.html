@@ -1,0 +1,12 @@
+<div>
+    <ul>
+        <li *ngFor="let item of listItems">
+            <span (click)="onClick(item)">
+                {{
+                    item['default_name'] ? item['default_name'] :
+                    item['model_group'] ? item['model_group'] :
+                    item['year_model'] }}
+            </span>
+        </li>
+    </ul>
+</div>

@@ -1,21 +1,71 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-  <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
+<div>
+  <form [formGroup]="queryForm" (ngSubmit)="onSubmit(queryForm.value)" autocomplete="off">
+    <div class="form-group" [ngClass]="{'error': !validateBrand() }" (blur)="disableDropdown('brand')">
+      <label for="brand">Brand: </label>
+      <em *ngIf="!validateBrand()">Required*</em>
+      <br />
+      <input 
+        formControlName = "brand" 
+        class="form-control" 
+        id="brand" type="text" 
+        placeholder="Brand Name..." 
+        (focus)="enableDropdown('brand')"
+      />
+
+      <app-list-options 
+        *ngIf="brandList && focusedElement['brand']" 
+        [listItems]="brandList" 
+        (valueSelected)="fetchModels(brand)"
+      ></app-list-options>
+
+    </div>
+
+    <div class="form-group border" [ngClass]="{'error': !validateModel() }" (blur)="disableDropdown('model')">
+      <label for="model">Model: </label>
+      <em *ngIf="!validateModel()">Required*</em>
+      <br />
+      <input 
+        formControlName = "model" 
+        class="form-control" 
+        id="model" 
+        type="text" 
+        placeholder="Model Name..." 
+        (focus)="enableDropdown('model')"
+      />
+
+      <app-list-options 
+        *ngIf="modelList && focusedElement['model']" 
+        [listItems]="modelList" 
+        (valueSelected)="fetchMakeYears()"
+      ></app-list-options>
+    </div>
+
+    <div class="form-group" [ngClass]="{'error': !validateMake() }">
+      <label for="make">Make: </label>
+      <em *ngIf="!validateMake() && queryForm.controls.make.errors.required">Required*</em>
+      <em *ngIf="!validateMake() && queryForm.controls.make.errors.pattern">Make must start with a Year*</em>
+      <br />
+      <input 
+        formControlName = "make"
+        class="form-control"
+        id="make"
+        type="text"
+        placeholder="Make Year..."
+        (focus)="enableDropdown('make')"
+        (blur)="disableDropdown('make')"
+      />
+      <app-list-options 
+        *ngIf="makeList && focusedElement['make']"
+        [listItems]="makeList"
+      ></app-list-options>
+    </div>
+
+    <div class="form-group">
+      <button type="submit">Search Records</button>
+    </div>
+
+  </form>
 </div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/cli">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
-  </li>
-</ul>
 
 <router-outlet></router-outlet>
