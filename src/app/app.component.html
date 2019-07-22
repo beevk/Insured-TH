@@ -35,7 +35,7 @@
       <em *ngIf="!validateModel()">Required*</em>
       
       <div class="ng-autocomplete model">
-        <ng-autocomplete 
+        <ng-autocomplete #modelRef
           formControlName="model"
           [data]="modelList"
           [searchKeyword]="searchKeyword.model"
@@ -66,7 +66,7 @@
       <!-- <em *ngIf="!validateMake() && queryForm.controls.make.errors.pattern">Make must start with a Year*</em> -->
 
       <div class="ng-autocomplete makeDropdown">
-        <ng-autocomplete 
+        <ng-autocomplete #makeRef
           formControlName="make"
           [data]="makeList"
           [searchKeyword]="searchKeyword.make"

@@ -14,8 +14,8 @@ import { Router } from '@angular/router';
 	styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-	// @ViewChildren('item') item: any;
-	// @ViewChild('make', { static: false }) make: any;
+	@ViewChild('modelRef', { static: false }) modelRef: any;
+	@ViewChild('makeRef', { static: false }) makeRef: any;
 
 	searchKeyword: any = {
 		brand: 'default_name',
@@ -96,6 +96,8 @@ export class AppComponent implements OnInit {
 
 	clearModelAndMake(e) {
 		// e.stopPropagation();
+		this.modelRef.clear();
+		this.makeRef.clear();
 		this.modelList = [];
 		this.makeList = [];
 		console.log("Model and Make field cleared");
@@ -103,7 +105,7 @@ export class AppComponent implements OnInit {
 
 	clearMake(e) {
 		// e.stopPropagation();
-		// this.item.clear();
+		this.makeRef.clear();
 		this.makeList = [];
 		console.log("Make field clear");
 	}
