@@ -6,7 +6,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./list-options.component.scss']
 })
 export class ListOptionsComponent implements OnInit {
-  @Input() listItems;
+  @Input() listItems: any;
   @Output() valueSelected = new EventEmitter();
 
   constructor() { }
@@ -15,7 +15,7 @@ export class ListOptionsComponent implements OnInit {
     console.log('From list-item:', this.listItems)
   }
 
-  onClick(event) {
+  onClick(event: any) {
     console.log("Ready to output", event)
     this.valueSelected.emit(event);
   }

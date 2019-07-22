@@ -1,3 +1,11 @@
+.header form {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	flex-wrap: wrap;
+	align-items: center;
+}
+
 em {
 	color: #e05c65;
 }
@@ -12,4 +20,12 @@ em {
 
 .border {
 	border: 1px solid green;
+}
+
+.form-group {
+	margin: 10px;
+}
+
+.input-container .suggestions-container {
+	z-index: 2;
 }

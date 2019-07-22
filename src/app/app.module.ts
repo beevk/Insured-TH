@@ -3,6 +3,8 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
+import { AutocompleteLibModule } from 'angular-ng-autocomplete';
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ListOptionsComponent } from './list-options/list-options.component';
@@ -12,7 +14,7 @@ import { ScreenCheckedPipe } from './shared/pipes/screen-checked.pipe';
 
 @NgModule({
 	declarations: [AppComponent, ListOptionsComponent, ListInsuranceComponent, ScreenCheckedPipe],
-	imports: [BrowserModule, AppRoutingModule, ReactiveFormsModule, HttpClientModule],
+	imports: [BrowserModule, AppRoutingModule, ReactiveFormsModule, HttpClientModule, AutocompleteLibModule],
 	providers: [{ provide: HTTP_INTERCEPTORS, useClass: BaseUrlInterceptor, multi: true }],
 	bootstrap: [AppComponent]
 })

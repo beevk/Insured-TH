@@ -1,9 +1,14 @@
-<div>
-    <h2>{{ insuranceList[0].maker }}</h2>
-    <h2>{{ insuranceList[0].model }}</h2>
-    <h3>{{ insuranceList[0].year_model }}</h3>
+<div *ngIf="isLoading" style="text-align: center;">
+    <h2>Loading...</h2>
+</div>
+<div *ngIf="!isLoading">
+    <h1>Insurance Sales Report - 
+        {{ insuranceList[0].maker }}
+        {{ insuranceList[0].model }}
+        {{ insuranceList[0].year_model }}
+    </h1>
 
-    <table>
+    <table style="width: 100%; overflow-x: scroll;">
         <thead>
             <tr>
                 
@@ -22,7 +27,7 @@
                 <th>{{ item.description }}.</th>
                 <th>{{ item.new_price | currency:'THB' }}.</th>
                 <th>{{ item.from_date | date: 'mediumDate'}}</th>
-                <th>{{ item.to_date }}</th>
+                <th>{{ item.to_date | date: 'mediumDate' }}</th>
                 <th>{{ item.market_value | currency:'THB' }}</th>
                 <th>{{ item.min_sum_insure | currency:'THB' }}</th>
                 <th>{{ item.max_sum_insure | currency:'THB' }}</th>

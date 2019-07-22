@@ -1,68 +1,96 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div>
+<div class="header">
   <form [formGroup]="queryForm" (ngSubmit)="onSubmit(queryForm.value)" autocomplete="off">
-    <div class="form-group" [ngClass]="{'error': !validateBrand() }" (blur)="disableDropdown('brand')">
-      <label for="brand">Brand: </label>
+    <div class="form-group" [ngClass]="{'error': !validateBrand() }">
+      
       <em *ngIf="!validateBrand()">Required*</em>
-      <br />
-      <input 
-        formControlName = "brand" 
-        class="form-control" 
-        id="brand" type="text" 
-        placeholder="Brand Name..." 
-        (focus)="enableDropdown('brand')"
-      />
+      
+      <div class="ng-autocomplete brand">
+        <ng-autocomplete 
+          formControlName="brand"
+          [data]="brandList"
+          [searchKeyword]="searchKeyword.brand"
+          (selected)='fetchModels($event)'
+          (inputChanged)='onChangeSearch($event)' 
+          (inputFocused)='onFocused($event)'
+          [itemTemplate]="brandTemplate"
+          [notFoundTemplate]="brandNotFoundTemplate"
+          notFoundText="No Match Found"
+          placeHolder="Select Brand..."
+          (inputCleared)="clearModelAndMake($event)"
+        >                                 
+        </ng-autocomplete>
+        
+        <ng-template #brandTemplate let-item>
+          <a [innerHTML]="item.default_name">{{item.default_name}}</a>
+        </ng-template>
 
-      <app-list-options 
-        *ngIf="brandList && focusedElement['brand']" 
-        [listItems]="brandList" 
-        (valueSelected)="fetchModels(brand)"
-      ></app-list-options>
-
+        <ng-template #brandNotFoundTemplate let-notFound>
+          <div [innerHTML]="notFound"></div>
+        </ng-template>
+      </div>
     </div>
 
-    <div class="form-group border" [ngClass]="{'error': !validateModel() }" (blur)="disableDropdown('model')">
-      <label for="model">Model: </label>
+    <div class="form-group" [ngClass]="{'error': !validateModel() }" (blur)="disableDropdown('model')">
+      
       <em *ngIf="!validateModel()">Required*</em>
-      <br />
-      <input 
-        formControlName = "model" 
-        class="form-control" 
-        id="model" 
-        type="text" 
-        placeholder="Model Name..." 
-        (focus)="enableDropdown('model')"
-      />
+      
+      <div class="ng-autocomplete model">
+        <ng-autocomplete 
+          formControlName="model"
+          [data]="modelList"
+          [searchKeyword]="searchKeyword.model"
+          (selected)='fetchMakeYears($event)'
+          (inputChanged)='onChangeSearch($event)' 
+          (inputFocused)='onFocused($event)'
+          [itemTemplate]="modelTemplate"
+          [notFoundTemplate]="modelNotFoundTemplate"
+          notFoundText="No Match Found"
+          placeHolder="Select Model..."
+          (inputCleared)="clearMake($event)"
+        >                                 
+        </ng-autocomplete>
+        
+        <ng-template #modelTemplate let-item>
+          <a [innerHTML]="item['model_group']"></a>
+        </ng-template>
 
-      <app-list-options 
-        *ngIf="modelList && focusedElement['model']" 
-        [listItems]="modelList" 
-        (valueSelected)="fetchMakeYears()"
-      ></app-list-options>
+        <ng-template #modelNotFoundTemplate let-notFound>
+          <div [innerHTML]="notFound"></div>
+        </ng-template>
+      </div>
     </div>
 
     <div class="form-group" [ngClass]="{'error': !validateMake() }">
-      <label for="make">Make: </label>
-      <em *ngIf="!validateMake() && queryForm.controls.make.errors.required">Required*</em>
-      <em *ngIf="!validateMake() && queryForm.controls.make.errors.pattern">Make must start with a Year*</em>
-      <br />
-      <input 
-        formControlName = "make"
-        class="form-control"
-        id="make"
-        type="text"
-        placeholder="Make Year..."
-        (focus)="enableDropdown('make')"
-        (blur)="disableDropdown('make')"
-      />
-      <app-list-options 
-        *ngIf="makeList && focusedElement['make']"
-        [listItems]="makeList"
-      ></app-list-options>
-    </div>
+      
+      <em *ngIf="!validateMake() && queryForm.controls.make.errors">Required*</em>
+      <!-- <em *ngIf="!validateMake() && queryForm.controls.make.errors.pattern">Make must start with a Year*</em> -->
 
-    <div class="form-group">
-      <button type="submit">Search Records</button>
+      <div class="ng-autocomplete makeDropdown">
+        <ng-autocomplete 
+          formControlName="make"
+          [data]="makeList"
+          [searchKeyword]="searchKeyword.make"
+          (inputChanged)='onChangeSearch($event)' 
+          (inputFocused)='onFocused($event)'
+          [itemTemplate]="makeTemplate"
+          [notFoundTemplate]="makeNotFoundTemplate"
+          notFoundText="No Match Found"
+          placeHolder="Select Make Year..."
+        >                                 
+        </ng-autocomplete>
+        
+        <ng-template #makeTemplate let-item>
+          <a [innerHTML]="item.year_model"></a>
+        </ng-template>
+
+        <ng-template #makeNotFoundTemplate let-notFound>
+          <div [innerHTML]="notFound"></div>
+        </ng-template>
+      </div>
+    </div>
+    
+    <div class="form-group button">
+      <button type="submit" [disabled]="queryForm.invalid">Search Records</button>
     </div>
 
   </form>
