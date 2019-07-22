@@ -1,9 +1,9 @@
 <div class="header">
   <form [formGroup]="queryForm" (ngSubmit)="onSubmit(queryForm.value)" autocomplete="off">
-    <div class="form-group" [ngClass]="{'error': !validateBrand() }">
+    
+    <div [ngClass]="{'error': queryForm.controls.brand.invalid && (queryForm.controls.brand.touched || buttonError) }">
       
-      <em *ngIf="!validateBrand()">Required*</em>
-      
+      <em *ngIf="!validateBrand()">Select this input field First!</em>
       <div class="ng-autocomplete brand">
         <ng-autocomplete 
           formControlName="brand"
@@ -16,7 +16,7 @@
           [notFoundTemplate]="brandNotFoundTemplate"
           notFoundText="No Match Found"
           placeHolder="Select Brand..."
-          (inputCleared)="clearModelAndMake($event)"
+          (inputCleared)="clearInputField('brand')"
         >                                 
         </ng-autocomplete>
         
@@ -30,7 +30,7 @@
       </div>
     </div>
 
-    <div class="form-group" [ngClass]="{'error': !validateModel() }" (blur)="disableDropdown('model')">
+    <div class="form-group"  [ngClass]="{'error': queryForm.controls.model.invalid && (queryForm.controls.model.touched || buttonError) }">
       
       <em *ngIf="!validateModel()">Required*</em>
       
@@ -46,7 +46,7 @@
           [notFoundTemplate]="modelNotFoundTemplate"
           notFoundText="No Match Found"
           placeHolder="Select Model..."
-          (inputCleared)="clearMake($event)"
+          (inputCleared)="clearInputField('model')"
         >                                 
         </ng-autocomplete>
         
@@ -60,7 +60,7 @@
       </div>
     </div>
 
-    <div class="form-group" [ngClass]="{'error': !validateMake() }">
+    <div class="form-group"  [ngClass]="{'error': queryForm.controls.make.invalid && (queryForm.controls.make.touched || buttonError) }">
       
       <em *ngIf="!validateMake() && queryForm.controls.make.errors">Required*</em>
       <!-- <em *ngIf="!validateMake() && queryForm.controls.make.errors.pattern">Make must start with a Year*</em> -->
@@ -89,7 +89,7 @@
       </div>
     </div>
     
-    <div class="form-group button">
+    <div class="form-group button" (mouseenter)="buttonError = !buttonError" (mouseleave)="buttonError = !buttonError">
       <button type="submit" [disabled]="queryForm.invalid">Search Records</button>
     </div>
 

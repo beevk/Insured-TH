@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ViewChildren } from '@angular/core';
-import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { FormGroup, Validators, FormBuilder, FormControl } from '@angular/forms';
 
 import { IBrand } from './shared/models/brand.interface';
 import { IModel } from './shared/models/model.interface';
@@ -17,7 +17,7 @@ export class AppComponent implements OnInit {
 	@ViewChild('modelRef', { static: false }) modelRef: any;
 	@ViewChild('makeRef', { static: false }) makeRef: any;
 
-	searchKeyword: any = {
+	searchKeyword: Object = {
 		brand: 'default_name',
 		model: 'model_group',
 		make: 'year_model'
@@ -27,10 +27,12 @@ export class AppComponent implements OnInit {
 	modelList: IModel[];
 	makeList: IMake[];
 	insuranceList: IInsurance[];
+	queryForm: FormGroup;
+
+	buttonError: boolean = false
 
 	private selected: any = {};
 
-	queryForm: FormGroup;
 
 	constructor(private options: OptionsService, private fb: FormBuilder, private router: Router) {
 		this.queryForm = fb.group({
@@ -51,13 +53,6 @@ export class AppComponent implements OnInit {
 		})
 	}
 
-	onChangeSearch(val) {
-		console.log('Input field changed', val);
-	}
-
-	onFocused(val) {
-		// Check if previous fields are set
-	}
 
 	fetchModels(brand: any) {
 		this.selected = Object.assign({}, this.selected, { brand: brand });
@@ -89,35 +84,37 @@ export class AppComponent implements OnInit {
 
 	onSubmit(finalData: any) {
 		this.selected = Object.assign({}, this.selected, { make: finalData.make });
-		console.log("from submit", finalData)
+
 		this.router.navigate([`${this.selected.brand.record_id}`, `${finalData.make.model}`, `${finalData.make.year_model}`])
 		// console.log("Submitted values", values);
 	}
 
-	clearModelAndMake(e) {
-		// e.stopPropagation();
-		this.modelRef.clear();
-		this.makeRef.clear();
-		this.modelList = [];
-		this.makeList = [];
-		console.log("Model and Make field cleared");
+	onChangeSearch(val: string) {
+		console.log('Input field changed', val);
 	}
 
-	clearMake(e) {
-		// e.stopPropagation();
-		this.makeRef.clear();
-		this.makeList = [];
-		console.log("Make field clear");
+	onFocused(val: string) {
+		// Check if previous fields are set and valid here
+	}
+
+	clearInputField(val: string) {
+		if (val === "model") {
+			this.makeRef.clear();
+			this.makeList = [];
+		} else {
+			this.modelRef.clear();
+			this.modelList = [];
+		}
 	}
 
 
 	validateBrand() {
-		// return this.brand.valid || this.brand.untouched;
+		return this.queryForm.controls.brand.valid || this.queryForm.controls.brand.untouched;
 	}
 	validateModel() {
-		// return this.model.valid || this.model.untouched;
+		return this.queryForm.controls.brand.valid || this.queryForm.controls.brand.untouched;
 	}
 	validateMake() {
-		// return this.make.valid || this.make.untouched;
+		return this.queryForm.controls.brand.valid || this.queryForm.controls.brand.untouched;
 	}
 }
