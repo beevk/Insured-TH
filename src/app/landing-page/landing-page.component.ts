@@ -16,6 +16,6 @@ export class LandingPageComponent implements OnInit {
 
   displayInsuranceSales(info) {
     this.salesValueReceived = true;
-    this.formInfo = info;
+    this.formInfo = info; // Object.assign({}, info);
   }
 }

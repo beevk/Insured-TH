@@ -1,4 +1,4 @@
-<div class="header">
+<div class="formContainer">
   <form [formGroup]="queryForm" (ngSubmit)="onSubmit(queryForm.value)" autocomplete="off">
     
     <div [ngClass]="{'error': queryForm.controls.brand.invalid && (queryForm.controls.brand.touched || buttonError) }">
@@ -16,6 +16,8 @@
           [notFoundTemplate]="brandNotFoundTemplate"
           notFoundText="No Match Found"
           placeHolder="Select Brand..."
+          [attr.isLoading]="isLoading.brand ? 'true' : null "
+          
           (inputCleared)="clearInputField('brand')"
         >                                 
         </ng-autocomplete>
@@ -46,6 +48,7 @@
           [notFoundTemplate]="modelNotFoundTemplate"
           notFoundText="No Match Found"
           placeHolder="Select Model..."
+          [attr.isLoading]="isLoading.brand ? 'true' : null "
           (inputCleared)="clearInputField('model')"
         >                                 
         </ng-autocomplete>
@@ -75,6 +78,7 @@
           [itemTemplate]="makeTemplate"
           [notFoundTemplate]="makeNotFoundTemplate"
           notFoundText="No Match Found"
+          [attr.isLoading]="isLoading.brand ? 'true' : null "
           placeHolder="Select Make Year..."
         >                                 
         </ng-autocomplete>

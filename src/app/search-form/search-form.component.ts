@@ -21,7 +21,7 @@ export class SearchFormComponent implements OnInit {
     brand: 'default_name',
     model: 'model_group',
     make: 'year_model'
-  }
+  };
 
   brandList: IBrand[];
   modelList: IModel[];
@@ -29,9 +29,14 @@ export class SearchFormComponent implements OnInit {
   insuranceList: IInsurance[];
   queryForm: FormGroup;
 
-  buttonError: boolean = false
+  buttonError: boolean = false;
+  isLoading = {
+    brand: '',
+    model: '',
+    make: ''
+  };
 
-  private selected: any = {};
+  private selected = {};
 
 
   constructor(private options: OptionsService, private fb: FormBuilder) {
@@ -43,9 +48,11 @@ export class SearchFormComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.isLoading.brand = "true";
     this.options.listBrands().subscribe(data => {
       if (data['status']) {
         this.brandList = <IBrand[]>data['return_value'];
+        this.isLoading.brand = "";
       } else {
         // Handle Errors
         console.log('Error Fetching from HTTP -', data);
@@ -55,12 +62,12 @@ export class SearchFormComponent implements OnInit {
 
 
   fetchModels(brand: any) {
+    this.isLoading.model = "true";
     this.selected = Object.assign({}, this.selected, { brand: brand });
-    // console.log("From brand", brand.code);
     this.options.listModels(brand.code).subscribe(data => {
       if (data['status']) {
         this.modelList = <IModel[]>data['return_value'];
-        // console.log(`modelList: ${this.modelList}`)
+        this.isLoading.model = "";
       } else {
         // Handle Errors
         console.log(`Error Fetching from HTTP - ${data}`);
@@ -69,12 +76,12 @@ export class SearchFormComponent implements OnInit {
   }
 
   fetchMakeYears(model: any) {
+    this.isLoading.make = "true";
     this.selected = Object.assign({}, this.selected, { model: model });
-    // console.log("From make years", model);
     this.options.listMakeYears(model.brand_rid, model.model_group).subscribe(data => {
       if (data['status']) {
         this.makeList = <IMake[]>data['return_value'];
-        // console.log(`Server response: ${this.makeList}`)
+        this.isLoading.make = "";
       } else {
         // Handle Errors
         console.log(`Error Fetching from HTTP - ${data}`);
@@ -92,6 +99,7 @@ export class SearchFormComponent implements OnInit {
     };
 
     this.formSubmitted.emit(formInfo);
+    // this.formSubmitted.emit(Object.assign({}, formInfo));
     // this.router.navigate([`${this.selected.brand.record_id}`, `${finalData.make.model}`, `${finalData.make.year_model}`])
   }
 
