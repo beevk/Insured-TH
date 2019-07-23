@@ -1,0 +1,10 @@
+<app-search-form (formSubmitted)="displayInsuranceSales($event)"></app-search-form>
+<!-- This app search form @Output() values necessary to fetch insurance sales report (brandId, model, make) -->
+
+<!-- Use *ngIf here, if app-search-form returned value is received, this will not be shown -->
+<div *ngIf="!salesValueReceived">
+    Background stuffs here
+</div>
+
+<app-list-insurance *ngIf="salesValueReceived" [info]="formInfo"></app-list-insurance>
+<!-- This takes an input = output from app-search-form -->
