@@ -12,6 +12,8 @@ export class ListInsuranceComponent implements OnChanges {
   insuranceList: IInsurance[];
   isLoading: boolean = true;
 
+  isCard: boolean = true;
+
   constructor(private options: OptionsService) {
   }
 
@@ -26,6 +28,5 @@ export class ListInsuranceComponent implements OnChanges {
         console.log('Error Fetching data - API:', data);
       }
     })
-
   }
 }

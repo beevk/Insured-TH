@@ -8,18 +8,23 @@ header {
 		flex-direction: row;
 		justify-content: space-between;
 
+		span:first-child {
+			font-size: 1.5rem;
+			font-family: Brush Script MT, Brush Script Std, cursive;
+		}
+
 		a {
 			color: #f7f7f7;
 		}
 		nav a {
-			color: #ccc;
+			color: #999;
 
 			&:not(:last-child) {
 				margin-right: 25px;
 			}
 
 			&.active {
-				color: red;
+				color: #fff;
 			}
 		}
 	}

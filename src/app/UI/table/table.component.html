@@ -1,0 +1,28 @@
+<table style="width: 100%; overflow-x: scroll;">
+    <thead>
+        <tr>
+            
+            <th>Desc.</th>
+            <th>Price</th>
+            <th>From</th>
+            <th>To</th>
+            <th>Market Value</th>
+            <th>Min. Sum</th>
+            <th>Max. Sum</th>
+            <th>Screen Checked</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of dataList">
+            <th>{{ item.description }}.</th>
+            <th>{{ item.new_price | currency:'THB' }}.</th>
+            <th>{{ item.from_date | date: 'mediumDate'}}</th>
+            <th>{{ item.to_date | date: 'mediumDate' }}</th>
+            <th>{{ item.market_value | currency:'THB' }}</th>
+            <th>{{ item.min_sum_insure | currency:'THB' }}</th>
+            <th>{{ item.max_sum_insure | currency:'THB' }}</th>
+            <th>{{ item.screen_checked_flag | screenChecked }}</th> 
+            <!-- Use pipe above to show ✓ or X -->
+        </tr>
+    </tbody>
+</table>

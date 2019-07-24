@@ -1,0 +1,11 @@
+<div class="card" *ngFor="let item of dataList">
+    <div class="desc">{{item.description}}</div>
+    <div>{{ item.new_price | currency:'THB' }}.</div>
+    <hr>
+    <div>{{ item.from_date | date: 'mediumDate'}}</div>
+    <div>{{ item.to_date | date: 'mediumDate' }}</div>
+    <div>{{ item.market_value | currency:'THB' }}</div>
+    <div>{{ item.min_sum_insure | currency:'THB' }}</div>
+    <div>{{ item.max_sum_insure | currency:'THB' }}</div>
+    <div>{{ item.screen_checked_flag | screenChecked }}</div> 
+</div>
