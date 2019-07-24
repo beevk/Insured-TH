@@ -3,108 +3,97 @@
     <form [formGroup]="queryForm" (ngSubmit)="onSubmit(queryForm.value)" autocomplete="off">
     
       <div class="form-group" [ngClass]="{'error': queryForm.controls.brand.invalid && (queryForm.controls.brand.touched || buttonError) }">
-      
-      <div class="ng-autocomplete brand">
-        <ng-autocomplete 
-          formControlName="brand"
-          [data]="brandList"
-          [searchKeyword]="searchKeyword.brand"
-          (selected)='fetchModels($event)'
-          (inputChanged)='onChangeSearch($event)' 
-          (inputFocused)='onFocused($event)'
-          [itemTemplate]="brandTemplate"
-          [notFoundTemplate]="brandNotFoundTemplate"
-          notFoundText="No Match Found"
-          placeHolder="Select Brand..."
+        <div class="ng-autocomplete brand">
+          <ng-autocomplete #brandRef
+            formControlName="brand"
+            [data]="brandList"
+            [searchKeyword]="searchKeyword.brand"
+            (selected)='fetchModels($event)'
+            (inputChanged)='onChangeSearch($event)' 
+            (inputFocused)='onFocused($event)'
+            [itemTemplate]="brandTemplate"
+            [notFoundTemplate]="brandNotFoundTemplate"
+            notFoundText="No Match Found"
+            placeHolder="Select Brand..."
+            
+            (inputCleared)="clearInputField('brand')"
+          >                                 
+          </ng-autocomplete>
           
-          (inputCleared)="clearInputField('brand')"
-        >                                 
-        </ng-autocomplete>
-        
-        <ng-template #brandTemplate let-item>
-          <a [innerHTML]="item.default_name">{{item.default_name}}</a>
-        </ng-template>
+          <ng-template #brandTemplate let-item>
+            <a [innerHTML]="item.default_name">{{item.default_name}}</a>
+          </ng-template>
 
-        <ng-template #brandNotFoundTemplate let-notFound>
-          <div [innerHTML]="notFound"></div>
-        </ng-template>
+          <ng-template #brandNotFoundTemplate let-notFound>
+            <div [innerHTML]="notFound"></div>
+          </ng-template>
+        </div>
+
+        <em *ngIf="!validateBrand()">Select this input field First!</em>
       </div>
 
-      <em *ngIf="!validateBrand()">Select this input field First!</em>
+      <div class="form-group"  [ngClass]="{'error': queryForm.controls.model.invalid && (queryForm.controls.model.touched || buttonError) }">
+        <div class="ng-autocomplete model">
+          <ng-autocomplete #modelRef
+            formControlName="model"
+            [data]="modelList"
+            [searchKeyword]="searchKeyword.model"
+            (selected)='fetchMakeYears($event)'
+            (inputChanged)='onChangeSearch($event)' 
+            (inputFocused)='onFocused($event)'
+            [itemTemplate]="modelTemplate"
+            [notFoundTemplate]="modelNotFoundTemplate"
+            notFoundText="No Match Found"
+            placeHolder="Select Model..."
+            (inputCleared)="clearInputField('model')"
+          >                                 
+          </ng-autocomplete>
+          
+          <ng-template #modelTemplate let-item>
+            <a [innerHTML]="item['model_group']"></a>
+          </ng-template>
 
-    </div>
+          <ng-template #modelNotFoundTemplate let-notFound>
+            <div [innerHTML]="notFound"></div>
+          </ng-template>
+        </div>
 
-    <div class="form-group"  [ngClass]="{'error': queryForm.controls.model.invalid && (queryForm.controls.model.touched || buttonError) }">
-      
-      
-      <div class="ng-autocomplete model">
-        <ng-autocomplete #modelRef
-          formControlName="model"
-          [data]="modelList"
-          [searchKeyword]="searchKeyword.model"
-          (selected)='fetchMakeYears($event)'
-          (inputChanged)='onChangeSearch($event)' 
-          (inputFocused)='onFocused($event)'
-          [itemTemplate]="modelTemplate"
-          [notFoundTemplate]="modelNotFoundTemplate"
-          notFoundText="No Match Found"
-          placeHolder="Select Model..."
-          (inputCleared)="clearInputField('model')"
-        >                                 
-        </ng-autocomplete>
-        
-        <ng-template #modelTemplate let-item>
-          <a [innerHTML]="item['model_group']"></a>
-        </ng-template>
-
-        <ng-template #modelNotFoundTemplate let-notFound>
-          <div [innerHTML]="notFound"></div>
-        </ng-template>
+        <em *ngIf="!validateModel()">Required*</em>
       </div>
 
-      <em *ngIf="!validateModel()">Required*</em>
-        
+      <div class="form-group"  [ngClass]="{'error': queryForm.controls.make.invalid && (queryForm.controls.make.touched || buttonError) }">
+        <div class="ng-autocomplete makeDropdown">
+          <ng-autocomplete #makeRef
+            formControlName="make"
+            [data]="makeList"
+            [searchKeyword]="searchKeyword.make"
+            (inputChanged)='onChangeSearch($event)' 
+            (inputFocused)='onFocused($event)'
+            [itemTemplate]="makeTemplate"
+            [notFoundTemplate]="makeNotFoundTemplate"
+            notFoundText="No Match Found"
+            placeHolder="Select Make Year..."
+          >                                 
+          </ng-autocomplete>
+          
+          <ng-template #makeTemplate let-item>
+            <a [innerHTML]="item.year_model"></a>
+          </ng-template>
 
-    </div>
+          <ng-template #makeNotFoundTemplate let-notFound>
+            <div [innerHTML]="notFound"></div>
+          </ng-template>
+        </div>
 
-    <div class="form-group"  [ngClass]="{'error': queryForm.controls.make.invalid && (queryForm.controls.make.touched || buttonError) }">
-      
-
-      <div class="ng-autocomplete makeDropdown">
-        <ng-autocomplete #makeRef
-          formControlName="make"
-          [data]="makeList"
-          [searchKeyword]="searchKeyword.make"
-          (inputChanged)='onChangeSearch($event)' 
-          (inputFocused)='onFocused($event)'
-          [itemTemplate]="makeTemplate"
-          [notFoundTemplate]="makeNotFoundTemplate"
-          notFoundText="No Match Found"
-          placeHolder="Select Make Year..."
-        >                                 
-        </ng-autocomplete>
-        
-        <ng-template #makeTemplate let-item>
-          <a [innerHTML]="item.year_model"></a>
-        </ng-template>
-
-        <ng-template #makeNotFoundTemplate let-notFound>
-          <div [innerHTML]="notFound"></div>
-        </ng-template>
+      <em *ngIf="!validateMake() || queryForm.controls.make.errors">Required*</em>
+        <!-- <em *ngIf="!validateMake() && queryForm.controls.make.errors.pattern">Make must start with a Year*</em> -->
       </div>
 
+      <div class="form-group" (mouseenter)="buttonError = !buttonError" (mouseleave)="buttonError = !buttonError">
+        <button class="button" type="submit" [disabled]="queryForm.invalid">Search Records</button>
+      </div>
+    </form>
 
-    <em *ngIf="!validateMake() && queryForm.controls.make.errors">Required*</em>
-      <!-- <em *ngIf="!validateMake() && queryForm.controls.make.errors.pattern">Make must start with a Year*</em> -->
-      
-    </div>
-
-
-    
-    <div class="form-group button" (mouseenter)="buttonError = !buttonError" (mouseleave)="buttonError = !buttonError">
-      <button type="submit" [disabled]="queryForm.invalid">Search Records</button>
-    </div>
-
-  </form>
+    <button class="button" (click)="clearInputField('all')">Clear Form</button>
   </div>
 </div>

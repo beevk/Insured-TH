@@ -14,6 +14,7 @@ import { OptionsService } from '../shared/options.service';
 })
 export class SearchFormComponent implements OnInit {
   @Output() formSubmitted = new EventEmitter();
+  @ViewChild('brandRef', { static: false }) brandRef: any;
   @ViewChild('modelRef', { static: false }) modelRef: any;
   @ViewChild('makeRef', { static: false }) makeRef: any;
 
@@ -115,9 +116,12 @@ export class SearchFormComponent implements OnInit {
     if (val === "model") {
       this.makeRef.clear();
       this.makeList = [];
-    } else {
+    } else if (val === "brand") {
       this.modelRef.clear();
       this.modelList = [];
+    } else {
+      this.brandRef.clear();
+      this.brandRef.close();
     }
   }
 

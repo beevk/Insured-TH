@@ -28,4 +28,8 @@ export class ListInsuranceComponent implements OnChanges {
       }
     })
   }
+
+  printPage() {
+    window.print();
+  }
 }
