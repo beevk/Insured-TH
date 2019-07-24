@@ -11,7 +11,6 @@ export class ListInsuranceComponent implements OnChanges {
   @Input() info: any;
   insuranceList: IInsurance[];
   isLoading: boolean = true;
-
   isCard: boolean = true;
 
   constructor(private options: OptionsService) {
