@@ -1,12 +1,13 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-// import { AppComponent } from './app.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
+import { UploadFileComponent } from './upload/upload-file/upload-file.component';
+import { PageNotFoundComponent } from './errors/page-not-found.component';
 
 const routes: Routes = [
 	{ path: '', component: LandingPageComponent },
-	// { path: 'upload', component: LandingPageComponent },
-	// 	{ path: '**', component: PageNotFoundComponent }
+	{ path: 'upload', component: UploadFileComponent },
+	{ path: '**', component: PageNotFoundComponent }
 ];
 
 @NgModule({
@@ -14,3 +15,4 @@ const routes: Routes = [
 	exports: [RouterModule]
 })
 export class AppRoutingModule { }
+

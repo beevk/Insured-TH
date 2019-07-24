@@ -14,10 +14,12 @@ import { AppComponent } from './app.component';
 import { ListInsuranceComponent } from './list-insurance/list-insurance.component';
 import { SearchFormComponent } from './search-form/search-form.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
+import { PageNotFoundComponent } from './errors/page-not-found.component';
+import { UploadModule } from './upload/upload.module';
 
 @NgModule({
-	declarations: [AppComponent, ListInsuranceComponent, ScreenCheckedPipe, SearchFormComponent, LandingPageComponent],
-	imports: [BrowserModule, AppRoutingModule, ReactiveFormsModule, HttpClientModule, AutocompleteLibModule],
+	declarations: [AppComponent, ListInsuranceComponent, ScreenCheckedPipe, SearchFormComponent, LandingPageComponent, PageNotFoundComponent],
+	imports: [BrowserModule, AppRoutingModule, ReactiveFormsModule, HttpClientModule, AutocompleteLibModule, UploadModule],
 	providers: [{ provide: HTTP_INTERCEPTORS, useClass: BaseUrlInterceptor, multi: true }],
 	bootstrap: [AppComponent]
 })
