@@ -2,8 +2,15 @@
 <!-- This app search form @Output() values necessary to fetch insurance sales report (brandId, model, make) -->
 
 <!-- Use *ngIf here, if app-search-form returned value is received, this will not be shown -->
-<div *ngIf="!salesValueReceived">
-    Background stuffs here
+
+<div class="initial-bg-wrapper">
+    <div class="container">
+        <div *ngIf="!salesValueReceived">
+            <div class="inital-bg">
+                <img src="../../assets/images/car-search.jpg" alt="car search background">
+            </div>
+        </div>
+    </div>
 </div>
 
 <app-list-insurance *ngIf="salesValueReceived" [info]="formInfo"></app-list-insurance>

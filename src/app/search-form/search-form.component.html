@@ -1,9 +1,9 @@
 <div class="formContainer">
-  <form [formGroup]="queryForm" (ngSubmit)="onSubmit(queryForm.value)" autocomplete="off">
+  <div class="container">
+    <form [formGroup]="queryForm" (ngSubmit)="onSubmit(queryForm.value)" autocomplete="off">
     
-    <div [ngClass]="{'error': queryForm.controls.brand.invalid && (queryForm.controls.brand.touched || buttonError) }">
+      <div class="form-group" [ngClass]="{'error': queryForm.controls.brand.invalid && (queryForm.controls.brand.touched || buttonError) }">
       
-      <em *ngIf="!validateBrand()">Select this input field First!</em>
       <div class="ng-autocomplete brand">
         <ng-autocomplete 
           formControlName="brand"
@@ -16,7 +16,6 @@
           [notFoundTemplate]="brandNotFoundTemplate"
           notFoundText="No Match Found"
           placeHolder="Select Brand..."
-          [attr.isLoading]="isLoading.brand ? 'true' : null "
           
           (inputCleared)="clearInputField('brand')"
         >                                 
@@ -30,11 +29,13 @@
           <div [innerHTML]="notFound"></div>
         </ng-template>
       </div>
+
+      <em *ngIf="!validateBrand()">Select this input field First!</em>
+
     </div>
 
     <div class="form-group"  [ngClass]="{'error': queryForm.controls.model.invalid && (queryForm.controls.model.touched || buttonError) }">
       
-      <em *ngIf="!validateModel()">Required*</em>
       
       <div class="ng-autocomplete model">
         <ng-autocomplete #modelRef
@@ -48,7 +49,6 @@
           [notFoundTemplate]="modelNotFoundTemplate"
           notFoundText="No Match Found"
           placeHolder="Select Model..."
-          [attr.isLoading]="isLoading.brand ? 'true' : null "
           (inputCleared)="clearInputField('model')"
         >                                 
         </ng-autocomplete>
@@ -61,12 +61,14 @@
           <div [innerHTML]="notFound"></div>
         </ng-template>
       </div>
+
+      <em *ngIf="!validateModel()">Required*</em>
+        
+
     </div>
 
     <div class="form-group"  [ngClass]="{'error': queryForm.controls.make.invalid && (queryForm.controls.make.touched || buttonError) }">
       
-      <em *ngIf="!validateMake() && queryForm.controls.make.errors">Required*</em>
-      <!-- <em *ngIf="!validateMake() && queryForm.controls.make.errors.pattern">Make must start with a Year*</em> -->
 
       <div class="ng-autocomplete makeDropdown">
         <ng-autocomplete #makeRef
@@ -78,7 +80,6 @@
           [itemTemplate]="makeTemplate"
           [notFoundTemplate]="makeNotFoundTemplate"
           notFoundText="No Match Found"
-          [attr.isLoading]="isLoading.brand ? 'true' : null "
           placeHolder="Select Make Year..."
         >                                 
         </ng-autocomplete>
@@ -91,11 +92,19 @@
           <div [innerHTML]="notFound"></div>
         </ng-template>
       </div>
+
+
+    <em *ngIf="!validateMake() && queryForm.controls.make.errors">Required*</em>
+      <!-- <em *ngIf="!validateMake() && queryForm.controls.make.errors.pattern">Make must start with a Year*</em> -->
+      
     </div>
+
+
     
     <div class="form-group button" (mouseenter)="buttonError = !buttonError" (mouseleave)="buttonError = !buttonError">
       <button type="submit" [disabled]="queryForm.invalid">Search Records</button>
     </div>
 
   </form>
+  </div>
 </div>

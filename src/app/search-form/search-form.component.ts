@@ -104,7 +104,7 @@ export class SearchFormComponent implements OnInit {
   }
 
   onChangeSearch(val: string) {
-    console.log('Input field changed', val);
+    // console.log('Input field changed', val);
   }
 
   onFocused(val: string) {

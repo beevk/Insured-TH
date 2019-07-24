@@ -1,3 +1,44 @@
+$primary-color: (#00b8ff);
+$danger-color: (#ff0022);
+$danger-color-dim: (#ff002281);
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+a {
+	color: #111;
+	text-decoration: none;
+}
+
+ul,
+ol {
+	list-style: none;
+}
+
+button {
+	padding: 0 35px;
+	height: 40px;
+	border: 1px solid $primary-color;
+	background-color: $primary-color;
+	color: #fff;
+	font-size: 16px;
+	cursor: pointer;
+	float: left;
+	transition: .3s;
+
+	&:disabled {
+		cursor: no-drop;
+	}
+
+	&:not(:disabled):hover {
+		background-color: #fff;
+		color: #4e4e4e;
+	}
+}
+
 /* You can add global styles to this file, and also import other style files */
 .autocomplete-container .suggestions-container.is-visible {
 	z-index: 2;
@@ -8,12 +49,96 @@
 // 	// padding: 5px;
 // 	border-radius: 4px;
 // }
+.formContainer .autocomplete-container {
+	box-shadow: none;
+}
+
+form .autocomplete-container .input-container input {
+	border: 1px solid #d6d2d2;
+	box-shadow: none;
+	font-size: 16px;
+	height: 40px;
+	margin-bottom: 5px;
+
+	&:focus {
+		animation: blink .8s forwards;
+	}
+}
 
 .error .autocomplete-container .input-container input {
-	border: 1px solid #e05c65;
-	transition: border ease-in-out .2s, box-shadow ease-in-out .2s;
-	transition-property: border, box-shadow;
-	transition-duration: 0.1s, 0.1s;
-	transition-timing-function: ease-in-out, ease-in-out;
-	transition-delay: 0s, 0s;
+	border-left-color: $danger-color;
+	border-left-width: 4px;
+	background-color: #f5eeee;
+
+	&:focus {
+		border-left-color: $danger-color;
+		border-left-width: 4px;
+		background-color: #f5eeee;
+	}
+}
+
+@keyframes blink {
+	0% {
+		box-shadow: none;
+	}
+	25% {
+		box-shadow: 0 0 8px $primary-color;
+	}
+	50% {
+		box-shadow: none;
+	}
+	100% {
+		box-shadow: 0 0 8px $primary-color;
+	}
+}
+
+.form-group {
+	position: relative;
+
+	em {
+		font-size: 14px;
+		color: red;
+	}
+}
+
+@media screen and (min-width: 0px) {
+	.form-group {
+		em {
+			position: relative;
+			font-size: 14px;
+			color: red;
+		}
+	}
+}
+
+@media screen and (min-width: 776px) {
+	.container {
+		padding: 0 20px;
+		max-width: 680px;
+		margin: auto;
+	}
+}
+
+@media screen and (min-width: 991px) {
+	.container {
+		max-width: 900px;
+	}
+}
+
+@media screen and (min-width: 1198px) {
+	.container {
+		max-width: 990px;
+	}
+}
+
+@media screen and (min-width: 1280px) {
+	.container {
+		max-width: 1200px;
+	}
+}
+
+@media screen and (min-width: 1440px) {
+	.container {
+		max-width: 1350px;
+	}
 }
