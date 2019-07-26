@@ -15,13 +15,13 @@ import { ListInsuranceComponent } from './list-insurance/list-insurance.componen
 import { SearchFormComponent } from './search-form/search-form.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { PageNotFoundComponent } from './errors/page-not-found.component';
-import { UploadModule } from './upload/upload.module';
+import { FileTransferModule } from './fileTransfer/file-transfer.module';
 import { CardsComponent } from './UI/cards/cards.component';
 import { TableComponent } from './UI/table/table.component';
 
 @NgModule({
 	declarations: [AppComponent, ListInsuranceComponent, ScreenCheckedPipe, SearchFormComponent, LandingPageComponent, PageNotFoundComponent, CardsComponent, TableComponent],
-	imports: [BrowserModule, AppRoutingModule, ReactiveFormsModule, HttpClientModule, AutocompleteLibModule, UploadModule],
+	imports: [BrowserModule, AppRoutingModule, ReactiveFormsModule, HttpClientModule, AutocompleteLibModule, FileTransferModule],
 	providers: [{ provide: HTTP_INTERCEPTORS, useClass: BaseUrlInterceptor, multi: true }],
 	bootstrap: [AppComponent]
 })

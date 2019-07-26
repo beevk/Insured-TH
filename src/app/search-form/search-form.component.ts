@@ -1,11 +1,9 @@
 import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 
-import { IBrand } from '../shared/models/brand.interface';
-import { IModel } from '../shared/models/model.interface';
-import { IMake } from '../shared/models/make.interface';
-import { IInsurance } from '../shared/models/insurance.interface';
 import { OptionsService } from '../shared/options.service';
+
+import { IBrand, IModel, IMake, IInputError } from '../shared/models/index.interface';
 
 @Component({
   selector: 'app-search-form',
@@ -18,27 +16,35 @@ export class SearchFormComponent implements OnInit {
   @ViewChild('modelRef', { static: false }) modelRef: any;
   @ViewChild('makeRef', { static: false }) makeRef: any;
 
-  searchKeyword: Object = {
+  brandList: IBrand[];
+  modelList: IModel[];
+  makeList: IMake[];
+  queryForm: FormGroup;
+  buttonError: boolean = false;
+  inputError: IInputError = {
+    brand: false,
+    model: false,
+    make: false
+  }
+
+  searchKeyword = {
     brand: 'default_name',
     model: 'model_group',
     make: 'year_model'
   };
 
-  brandList: IBrand[];
-  modelList: IModel[];
-  makeList: IMake[];
-  insuranceList: IInsurance[];
-  queryForm: FormGroup;
-
-  buttonError: boolean = false;
   isLoading = {
     brand: '',
     model: '',
     make: ''
   };
 
-  private selected = {};
-
+  private selected = {
+    // set it to type IBrand, IModel & IMake
+    brand: {},
+    model: {},
+    make: {}
+  };
 
   constructor(private options: OptionsService, private fb: FormBuilder) {
     this.queryForm = fb.group({
@@ -56,7 +62,7 @@ export class SearchFormComponent implements OnInit {
         this.isLoading.brand = "";
       } else {
         // Handle Errors
-        console.log('Error Fetching from HTTP -', data);
+        console.error('Error Fetching from HTTP -', data);
       }
     })
   }
@@ -64,75 +70,115 @@ export class SearchFormComponent implements OnInit {
 
   fetchModels(brand: any) {
     this.isLoading.model = "true";
+    this.inputError.brand = false;
     this.selected = Object.assign({}, this.selected, { brand: brand });
+
     this.options.listModels(brand.code).subscribe(data => {
       if (data['status']) {
         this.modelList = <IModel[]>data['return_value'];
         this.isLoading.model = "";
       } else {
         // Handle Errors
-        console.log(`Error Fetching from HTTP - ${data}`);
+        console.error(`Error Fetching from HTTP - ${data}`);
       }
     })
   }
 
   fetchMakeYears(model: any) {
     this.isLoading.make = "true";
+    this.inputError.model = false;
     this.selected = Object.assign({}, this.selected, { model: model });
+
     this.options.listMakeYears(model.brand_rid, model.model_group).subscribe(data => {
       if (data['status']) {
         this.makeList = <IMake[]>data['return_value'];
         this.isLoading.make = "";
       } else {
         // Handle Errors
-        console.log(`Error Fetching from HTTP - ${data}`);
+        console.error(`Error Fetching from HTTP - ${data}`);
       }
     })
   }
 
+  makeSelected(make: any) {
+    this.inputError.make = false;
+    this.selected = Object.assign({}, this.selected, { make: make });
+  }
+
   onSubmit(finalData: any) {
-    this.selected = Object.assign({}, this.selected, { make: finalData.make });
+    if (this.isEmpty(this.selected.brand)) {
+      this.inputError.brand = true;
+    } else if (this.isEmpty(this.selected.model)) {
+      this.inputError.brand = true;
+    } else if (this.isEmpty(this.selected.make)) {
+      this.inputError.brand = true;
+    } else {
+      let formInfo = {
+        brandId: finalData.brand.record_id,
+        model: finalData.make.model,
+        make: finalData.make.year_model
+      };
 
-    let formInfo = {
-      brandId: finalData.brand.record_id,
-      model: finalData.make.model,
-      make: finalData.make.year_model
-    };
-
-    this.formSubmitted.emit(formInfo);
-    // this.formSubmitted.emit(Object.assign({}, formInfo));
-    // this.router.navigate([`${this.selected.brand.record_id}`, `${finalData.make.model}`, `${finalData.make.year_model}`])
+      this.formSubmitted.emit(formInfo);
+    }
   }
 
   onChangeSearch(val: string) {
-    // console.log('Input field changed', val);
+    // Custom Search functionality goes here
   }
 
   onFocused(val: string) {
-    // Check if previous fields are set and valid here
+    if (val === "make") {
+      if (this.isEmpty(this.selected.model)) {
+        this.inputError.model = true;
+        if (this.isEmpty(this.selected.brand)) { }
+        this.inputError.brand = true;
+      }
+    } else if (val === "model") {
+      if (this.isEmpty(this.selected.brand)) {
+        this.inputError.brand = true;
+        this.inputError.make = false;
+      }
+    } else {
+      this.inputError.model = false;
+      this.inputError.make = false;
+    }
   }
 
   clearInputField(val: string) {
     if (val === "model") {
       this.makeRef.clear();
       this.makeList = [];
+      this.selected.model = undefined;
     } else if (val === "brand") {
       this.modelRef.clear();
       this.modelList = [];
+      this.selected.brand = undefined;
+    } else if (val === "make") {
+      this.selected.make = undefined;
     } else {
       this.brandRef.clear();
       this.brandRef.close();
     }
   }
 
-
   validateBrand() {
-    return this.queryForm.controls.brand.valid || this.queryForm.controls.brand.untouched;
+    return this.inputError.brand || (this.queryForm.controls.brand.invalid && (this.queryForm.controls.brand.touched || this.buttonError));
   }
+
   validateModel() {
-    return this.queryForm.controls.brand.valid || this.queryForm.controls.brand.untouched;
+    return this.inputError.model || (this.queryForm.controls.model.invalid && (this.queryForm.controls.model.touched || this.buttonError));
   }
+
   validateMake() {
-    return this.queryForm.controls.brand.valid || this.queryForm.controls.brand.untouched;
+    return this.inputError.make || (this.queryForm.controls.make.invalid && (this.queryForm.controls.make.touched || this.buttonError));
+  }
+
+  isEmpty(obj): boolean {
+    for (let key in obj) {
+      if (obj.hasOwnProperty(key))
+        return false;
+    }
+    return true;
   }
 }

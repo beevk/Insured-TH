@@ -4,22 +4,12 @@ import { SearchFormComponent } from './search-form.component';
 
 describe('SearchFormComponent', () => {
   let component: SearchFormComponent;
-  let fixture: ComponentFixture<SearchFormComponent>;
-
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ SearchFormComponent ]
-    })
-    .compileComponents();
-  }));
+  let mockOptionsService, mockFormBuilder;
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SearchFormComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    mockOptionsService = jasmine.createSpyObj(['listBrands', 'listModels', 'listMakeYears', 'listMakeYears']);
+    mockFormBuilder = jasmine.createSpyObj(['listBrands', 'listModels', 'listMakeYears', 'listMakeYears']);
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+    component = new SearchFormComponent(mockOptionsService, mockFormBuilder);
   });
 });

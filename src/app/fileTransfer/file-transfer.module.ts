@@ -12,4 +12,4 @@ import { UploadFileComponent } from './upload-file/upload-file.component';
     NgxFileDropModule
   ]
 })
-export class UploadModule { }
+export class FileTransferModule { }

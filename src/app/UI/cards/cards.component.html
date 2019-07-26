@@ -1,11 +1,17 @@
 <div class="card" *ngFor="let item of dataList">
-    <div class="desc">{{item.description}}</div>
-    <div>{{ item.new_price | currency:'THB' }}.</div>
+    <h2 class="desc">{{item.description}}</h2>
+    <div><strong>Price:</strong> {{ item.new_price | currency: 'THB' : 'symbol-narrow' : '.0-2' }}</div>
+    <div><strong>Market Value:</strong> {{ item.market_value | currency: 'THB' : 'symbol-narrow' : '.0-2' }}</div>
     <hr>
-    <div>{{ item.from_date | date: 'mediumDate'}}</div>
-    <div>{{ item.to_date | date: 'mediumDate' }}</div>
-    <div>{{ item.market_value | currency:'THB' }}</div>
-    <div>{{ item.min_sum_insure | currency:'THB' }}</div>
-    <div>{{ item.max_sum_insure | currency:'THB' }}</div>
-    <div>{{ item.screen_checked_flag | screenChecked }}</div> 
+    <div class="insuredDate">
+        <strong> Insured </strong>
+        <span> From: {{ item.from_date | date: 'shortDate'}}</span>
+        <span> To: {{ item.to_date | date: 'shortDate' }}</span>
+    </div>
+    <div class="insuredSum">
+        <strong> Insurance Sum </strong>
+        <span> Min: {{ item.min_sum_insure | currency: 'THB' : 'symbol-narrow' : '.0-2' }}</span>
+        <span> Max: {{ item.max_sum_insure | currency: 'THB' : 'symbol-narrow' : '.0-2' }}</span>
+    </div>
+    <div><strong>Screen Checked:</strong>{{ item.screen_checked_flag | screenChecked }}</div> 
 </div>
