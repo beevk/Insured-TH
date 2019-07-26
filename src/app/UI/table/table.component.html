@@ -15,7 +15,7 @@
         </thead>
         <tbody>
             <tr *ngFor="let item of dataList">
-                <td sc data-label="Description">{{ item.description }}.</td>
+                <td sc data-label="Description">{{ item.description }}</td>
                 <td data-label="Price">{{ item.new_price | currency:'THB' : 'symbol-narrow' : '.0-2' }}</td>
                 <td data-label="From">{{ item.from_date | date: 'shortDate'}}</td>
                 <td data-label="To">{{ item.to_date | date: 'shortDate' }}</td>

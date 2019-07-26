@@ -109,9 +109,9 @@ export class SearchFormComponent implements OnInit {
     if (this.isEmpty(this.selected.brand)) {
       this.inputError.brand = true;
     } else if (this.isEmpty(this.selected.model)) {
-      this.inputError.brand = true;
+      this.inputError.model = true;
     } else if (this.isEmpty(this.selected.make)) {
-      this.inputError.brand = true;
+      this.inputError.make = true;
     } else {
       let formInfo = {
         brandId: finalData.brand.record_id,
@@ -158,7 +158,7 @@ export class SearchFormComponent implements OnInit {
       this.selected.make = undefined;
     } else {
       this.brandRef.clear();
-      this.brandRef.close();
+      // this.brandRef.close();
     }
   }
 

@@ -1,82 +1,80 @@
 @import "../../../variables.scss";
 
-.insurance-table-wrapper{
-    overflow-x: auto;
+.insurance-table-wrapper {
+	overflow-x: auto;
 }
 
-table { 
-    width: 100%; 
-    border-collapse: collapse; 
+table {
+	width: 100%;
+	border-collapse: collapse;
 
-    tr:nth-of-type(even){
-        background-color: #f7f7f7;
-    }
-    th { 
-        background: $primary-color; 
-        color: white; 
-        font-weight: bold; 
-    }
-    td, th { 
-        padding: 10px; 
-        border: 1px solid #ccc; 
-        text-align: left; 
-    }
-    td:last-child{
-        text-align: center;
-    }
+	tr:nth-of-type(even) {
+		background-color: #f7f7f7;
+	}
+	th {
+		background: $primary-color;
+		color: white;
+		font-weight: bold;
+	}
+	td,
+	th {
+		padding: 10px;
+		border: 1px solid #ccc;
+		text-align: left;
+	}
+	td:last-child {
+		text-align: center;
+	}
 }
 
 @media screen and (max-width: 1279px) {
-    table {
-    border: 0;
+	table {
+		border: 0;
 
-    thead {
-        border: none;
-        clip: rect(0 0 0 0);
-        height: 1px;
-        margin: -1px;
-        overflow: hidden;
-        padding: 0;
-        position: absolute;
-        width: 1px;
-        }
-        tr {
-            border-bottom: 3px solid #ddd;
-            display: block;
-            margin-bottom: .625em;
-            background: #f7f7f7;
-        }
-        td {
-            border-bottom: 1px solid #ddd;
-            display: block;
-            font-size: .5em;
-            text-align: right;
+		thead {
+			border: none;
+			clip: rect(0 0 0 0);
+			height: 1px;
+			margin: -1px;
+			overflow: hidden;
+			padding: 0;
+			position: absolute;
+			width: 1px;
+		}
+		tr {
+			border-bottom: 3px solid #ddd;
+			display: block;
+			margin-bottom: .625em;
+			background: #f7f7f7;
+		}
+		td {
+			border-bottom: 1px solid #ddd;
+			display: block;
+			font-size: .5em;
+			text-align: right;
 
-            &::before {
-                /*
-                * aria-label has no advantage, it won't be read inside a table
-                content: attr(aria-label);
-                */
-                content: attr(data-label);
-                float: left;
-                font-weight: bold;
-                text-transform: uppercase;
-            }
-            &:last-child {
-                border-bottom: 0;
-                text-align: center;
-            }
-        }
-    }
+			&::before {
+				content: attr(data-label);
+				float: left;
+				font-weight: bold;
+				text-transform: uppercase;
+			}
+			&:last-child {
+				border-bottom: 0;
+				text-align: right;
+			}
+		}
+	}
 }
 
-@media print{
-    table {
-        border: 0;
-        border-collapse: collapse;
-        
-        th, td{
-            font-size: 10px;
-        }
-    }
+@media print {
+	table {
+		border: 0;
+		border-collapse: collapse;
+
+		th,
+		td {
+			font-size: 10px;
+		}
+	}
 }

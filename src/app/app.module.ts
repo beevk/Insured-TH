@@ -4,6 +4,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
+import { FileTransferModule } from './file-transfer/file-transfer.module';
 
 import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 
@@ -15,7 +16,6 @@ import { ListInsuranceComponent } from './list-insurance/list-insurance.componen
 import { SearchFormComponent } from './search-form/search-form.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { PageNotFoundComponent } from './errors/page-not-found.component';
-import { FileTransferModule } from './fileTransfer/file-transfer.module';
 import { CardsComponent } from './UI/cards/cards.component';
 import { TableComponent } from './UI/table/table.component';
 

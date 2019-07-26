@@ -5,7 +5,7 @@
       <div class="form-group" 
         [ngClass]="{'error': validateBrand() }">
         <div class="ng-autocomplete brand">
-          <em *ngIf="queryForm.controls.brand.invalid && (queryForm.controls.brand.touched || queryForm.controls.brand.dirty)">*</em>
+          <!-- <em *ngIf="queryForm.controls.brand.invalid && (queryForm.controls.brand.touched || queryForm.controls.brand.dirty)">*</em> -->
           <ng-autocomplete #brandRef
             formControlName="brand"
             [data]="brandList"
@@ -36,7 +36,7 @@
 
       <div class="form-group" [ngClass]="{'error': validateModel() }">
         <div class="ng-autocomplete model">
-          <em *ngIf="queryForm.controls.model.invalid && queryForm.controls.model.touched">*</em>
+          <!-- <em *ngIf="queryForm.controls.model.invalid && queryForm.controls.model.touched">*</em> -->
           <ng-autocomplete #modelRef
             formControlName="model"
             [data]="modelList"
@@ -66,7 +66,7 @@
 
       <div class="form-group" [ngClass]="{'error': validateMake() }">
         <div class="ng-autocomplete makeDropdown">
-          <em *ngIf="queryForm.controls.make.invalid && queryForm.controls.make.touched">*</em>
+          <!-- <em *ngIf="queryForm.controls.make.invalid && queryForm.controls.make.touched">*</em> -->
           <ng-autocomplete #makeRef
             formControlName="make"
             [data]="makeList"
