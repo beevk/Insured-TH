@@ -1,4 +1,12 @@
 .inital-bg {
-	margin: 40px;
-	text-align: center;
+	background-image: url(../../assets/images/car-search.png);
+	height: 450px;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+@media screen and (max-width:991px){
+	.inital-bg{
+		background-size: contain;
+	}
 }

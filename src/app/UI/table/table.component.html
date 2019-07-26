@@ -1,28 +1,30 @@
-<table style="width: 100%; overflow-x: scroll;">
-    <thead>
-        <tr>
-            
-            <th>Desc.</th>
-            <th>Price</th>
-            <th>From</th>
-            <th>To</th>
-            <th>Market Value</th>
-            <th>Min. Sum</th>
-            <th>Max. Sum</th>
-            <th>Screen Checked</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let item of dataList">
-            <th>{{ item.description }}.</th>
-            <th>{{ item.new_price | currency:'THB' }}.</th>
-            <th>{{ item.from_date | date: 'mediumDate'}}</th>
-            <th>{{ item.to_date | date: 'mediumDate' }}</th>
-            <th>{{ item.market_value | currency:'THB' }}</th>
-            <th>{{ item.min_sum_insure | currency:'THB' }}</th>
-            <th>{{ item.max_sum_insure | currency:'THB' }}</th>
-            <th>{{ item.screen_checked_flag | screenChecked }}</th> 
-            <!-- Use pipe above to show ✓ or X -->
-        </tr>
-    </tbody>
-</table>
+<div class="insurance-table-wrapper">
+    <table>
+        <thead>
+            <tr>
+                
+                <th scope="col">Description</th>
+                <th scope="col">Price</th>
+                <th scope="col">From</th>
+                <th scope="col">To</th>
+                <th scope="col">Market Value</th>
+                <th scope="col">Min. Sum</th>
+                <th scope="col">Max. Sum</th>
+                <th scope="col">Screen Checked</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of dataList">
+                <td sc data-label="Description">{{ item.description }}.</td>
+                <td data-label="Price">{{ item.new_price | currency:'THB' : 'symbol-narrow' : '.0-2' }}</td>
+                <td data-label="From">{{ item.from_date | date: 'shortDate'}}</td>
+                <td data-label="To">{{ item.to_date | date: 'shortDate' }}</td>
+                <td data-label="Market Value">{{ item.market_value | currency:'THB' : 'symbol-narrow' : '.0-2' }}</td>
+                <td data-label="Min. Sum">{{ item.min_sum_insure | currency:'THB' : 'symbol-narrow' : '.0-2' }}</td>
+                <td data-label="Max. Sum">{{ item.max_sum_insure | currency:'THB' : 'symbol-narrow' : '.0-2' }}</td>
+                <td data-label="Screen Checked">{{ item.screen_checked_flag | screenChecked }}</td> 
+                <!-- Use pipe above to show ✓ or X -->
+            </tr>
+        </tbody>
+    </table>
+</div>

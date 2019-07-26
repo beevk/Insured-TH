@@ -1,5 +1,5 @@
 .formContainer {
-	padding: 15px;
+	padding: 20px 0;
 	box-shadow: 0 0 35px rgba($color: #000000, $alpha: 0.09);
 	form {
 		display: flex;
@@ -7,33 +7,46 @@
 		flex-wrap: wrap;
 
 		.form-group {
-			width: 25%;
-			padding: 10px;
+			height: 100%;
+			margin-bottom: 15px;
 		}
 	}
 }
+
 
 .ng-autocomplete {
 	width: auto;
 }
 
 @media screen and (min-width: 0px) {
-	.formContainer form .form-group {
-		width: 100%;
+	.formContainer form {
+		flex-direction: column;
+
+		.form-group{
+			width: auto;
+		}
 	}
 }
 
 @media screen and (min-width: 768px) {
-	.formContainer form .form-group {
-		width: 50%;
-	}
-}
+	.formContainer form {
+		flex-direction: row;
 
-@media screen and (min-width: 1198px) {
-	.formContainer form .form-group {
-		width: 25%;
+		.form-group{
+			width: 100%;
+		}
+		.form-group:not(:first-child){
+			width: 48%;
+		}
 	}
 }
 
 @media screen and (min-width: 1280px) {
+	.formContainer form {
+
+		.form-group{
+			width: auto!important;
+			margin-right: 15px;
+		}
+	}
 }

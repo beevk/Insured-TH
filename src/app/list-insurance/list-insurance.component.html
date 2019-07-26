@@ -1,40 +1,49 @@
-<div class="insurance-list-wrap">
-    <div class="container">
-        <div class="insurance-inner-wrap">
-            <div class="view-and-print">
-                <span class="switch">
-                    Table <input 
+<div class="insurance-list-wrap" id="insurance-list">
+    <div class="position-relative container">
+
+        <!-- Loading css before list is displayed -->
+        <div class="lds-wrapper" *ngIf="isLoading">
+            <div class="lds-ripple"><div></div><div></div></div>
+            <div>
+                Loading...
+            </div>
+        </div>
+
+        <div class="view-and-print row-flex flex-space-around item-center">
+
+            <span class="print">
+                <button class="button" (click)="printPage()">Print</button>
+            </span>
+
+            <div class="table-card-switch">
+                <span class="slider-text" [ngClass]="!isCard ? 'slider-active' : ''">Table</span>
+                <label class="switch"> 
+                    <input 
                         class="display-type" 
                         (change)="isCard = !isCard" 
                         type="checkbox"
                         checked="true"
-                    /> Cards
-                </span>
-                
-                <span class="print">
-                    <button class="button" (click)="printPage()">Print</button>
-                </span>
+                    /> 
+                    <span class="slider round"></span>
+                </label>
+                <span class="slider-text" [ngClass]="isCard ? 'slider-active' : ''">Cards</span>
             </div>
+        </div>
 
+        <div id="insurance-report" *ngIf="!isLoading">
 
-            <div *ngIf="isLoading" style="text-align: center;">
-                <!-- Loading CSS goes here -->
-                <h2>Loading...</h2> 
+            <!-- Also change this Title -->
+            <h1 class="list-main-header">Insurance Report - 
+                {{ insuranceList[0].maker }}
+                {{ insuranceList[0].model }}
+                {{ insuranceList[0].year_model }}
+            </h1>
+
+            <div *ngIf="isCard">
+                <app-cards [dataList]="insuranceList"></app-cards>
             </div>
-            <div *ngIf="!isLoading">
-                <!-- Also change this Title -->
-                <h1>Insurance Report - 
-                    {{ insuranceList[0].maker }}
-                    {{ insuranceList[0].model }}
-                    {{ insuranceList[0].year_model }}
-                </h1>
-
-                <div *ngIf="isCard">
-                    <app-cards [dataList]="insuranceList"></app-cards>
-                </div>
-                <div *ngIf="!isCard">
-                    <app-table [dataList]="insuranceList"></app-table>
-                </div>
+            <div *ngIf="!isCard">
+                <app-table [dataList]="insuranceList"></app-table>
             </div>
         </div>
     </div>
