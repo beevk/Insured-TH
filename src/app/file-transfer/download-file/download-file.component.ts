@@ -66,4 +66,18 @@ export class DownloadFileComponent implements OnInit {
       })
     })
   }
+
+  downloadFile(url: string) {
+    let blob, newURL;
+    let xhr = new XMLHttpRequest();
+    xhr.responseType = 'blob';
+    xhr.onload = function (event) {
+      blob = xhr.response;
+      newURL = window.URL.createObjectURL(blob);
+    };
+    xhr.open('GET', url);
+    xhr.send();
+
+    console.log(url);
+  }
 }

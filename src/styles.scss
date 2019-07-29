@@ -85,44 +85,12 @@ ol {
 	flex-direction: column;
 }
 
-.flex-space-between {
-	justify-content: space-between;
-}
-.flex-space-around {
-	justify-content: space-around;
-}
 .flex-center {
 	justify-content: center;
 }
-.flex-end {
-	justify-content: flex-end;
-}
-.flex-start {
-	justify-content: flex-start;
-}
+
 .item-center {
 	align-items: center;
-}
-.item-flex-end {
-	align-items: flex-end;
-}
-.item-flex-start {
-	align-items: flex-start;
-}
-.item-normal {
-	align-items: normal;
-}
-.self-center {
-	align-self: center;
-}
-.self-normal {
-	align-self: normal;
-}
-.self-flex-end {
-	align-self: flex-end;
-}
-.self-flex-start {
-	align-self: flex-start;
 }
 
 .ng-autocomplete {

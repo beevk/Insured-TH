@@ -60,7 +60,8 @@
                             <td data-label="New Filename"> {{item.new_filename}} </td>
                             <td data-label="File Extension"> {{item.original_file_extension}} </td>
                             <td data-label="Download File">
-                                <a href="{{item.fileURL || 'not-found'}}" class="button-transparent" target="_blank"> {{item.original_filename || 'link'}} </a>
+                                <!-- <a href="{{item.fileURL || 'not-found'}}" class="button-transparent" target="_blank"> {{item.original_filename || 'link'}} </a> -->
+                                <button class="button-transparent" (click)="downloadFile(item.fileURL)"> {{item.original_filename || 'link'}} </button>
                             </td>
                         </tr>
                     </tbody>
