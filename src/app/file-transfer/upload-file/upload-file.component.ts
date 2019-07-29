@@ -7,7 +7,7 @@ import { OptionsService } from 'src/app/shared/options.service';
 import { IBrand } from 'src/app/shared/models/brand.interface';
 import { TransferService } from '../shared/transfer.service';
 import { Observable } from 'rxjs';
-import { finalize } from 'rxjs/operators';
+import { finalize, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-upload-file',
@@ -25,6 +25,7 @@ export class UploadFileComponent implements OnInit {
   fileDropped: boolean;
   completeFileName: string;
   paused: boolean = false;
+  uploadCancelled: boolean = false;
 
   private fileName: string;
   private newFileName: number;
@@ -59,10 +60,11 @@ export class UploadFileComponent implements OnInit {
   prepareUpload(event: FileList) {
     this.downloadURL = undefined;
     this.fileDropped = true;
+    this.uploadCancelled = false;
     this.file = event.item(0);
-    this.fileName = this.file.name.split('.').slice(0, -1).join('.')
-    this.newFileName = this.generateName();
     this.fileExtension = this.getFileExtension(this.file.name);
+    this.newFileName = this.generateName();
+    this.fileName = this.getFileName(this.file.name, this.fileExtension);
     this.completeFileName = this.fileName + '.' + this.fileExtension;
   }
 
@@ -72,20 +74,31 @@ export class UploadFileComponent implements OnInit {
 
   startUpload() {
     // The storage path - Replace test with brandId
+    this.uploadCancelled = false;
     const path = `${this.brandId}/${this.newFileName}.${this.fileExtension}`;
+    const type = this.file.type.toString();
+    const customMetadata = { originalFileType: type };
 
     // This uploads the file to Firebase
-    this.task = this.storage.upload(path, this.file);
+    this.task = this.storage.upload(path, this.file, { customMetadata });
 
     this.uploadPercentage = this.task.percentageChanges();
-    this.snapshot = this.task.snapshotChanges();
     const fileRef = this.storage.ref(path);
-    // this.downloadURL = this.task.getDownloadURL()
+    // this.snapshot = this.task.snapshotChanges();
+
+    this.snapshot = this.task.snapshotChanges().pipe(
+      tap(snap => {
+        if (snap.bytesTransferred === snap.totalBytes) {
+          this.uploadFileRecord();
+          // Update firestore on completion
+          // this.db.collection('photos').add({ path, size: snap.totalBytes })
+        }
+      })
+    )
 
     this.task.snapshotChanges().pipe(
       finalize(() => {
         fileRef.getDownloadURL().subscribe(url => this.downloadURL = url);
-        this.uploadFileRecord();
       })
     ).subscribe();
 
@@ -99,6 +112,7 @@ export class UploadFileComponent implements OnInit {
   }
 
   uploadFileRecord() {
+    console.log("Uploading file record!");
     this.ft.uploadFileRecord(this.brandId, this.fileName, this.fileExtension, this.newFileName)
       .subscribe(() => {
         this.fileDropped = false;
@@ -120,5 +134,11 @@ export class UploadFileComponent implements OnInit {
   private generateName(): number {
     const timeStamp = Date.now().toString() + Math.floor(1000 + Math.random() * 9000).toString();
     return parseInt(timeStamp, 10);
+  }
+
+  private getFileName(name: string, fileExtension: string): string {
+    if (fileExtension.length === 0) return name;
+    // substract second string from first
+    return this.file.name.split('.').slice(0, -1).join('.');
   }
 }
