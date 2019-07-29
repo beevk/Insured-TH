@@ -137,8 +137,12 @@ export class UploadFileComponent implements OnInit {
   }
 
   private getFileName(name: string, fileExtension: string): string {
-    if (fileExtension.length === 0) return name;
-    // substract second string from first
-    return this.file.name.split('.').slice(0, -1).join('.');
+    const extLength = fileExtension.length;
+    if (extLength === 0) return name;
+
+    for (let i = extLength - 1, j = name.length - 1; i != 0; i-- , j--) {
+      if (name[j] !== fileExtension[i]) return name;
+    }
+    return name.slice(0, -extLength - 1);
   }
 }
