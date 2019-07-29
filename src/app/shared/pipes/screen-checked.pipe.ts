@@ -6,7 +6,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class ScreenCheckedPipe implements PipeTransform {
 
   transform(value: boolean, ...args: any[]): string {
-    return value ? '✓' : 'X';
+    return value ? '✓' : '×';
   }
 
 }

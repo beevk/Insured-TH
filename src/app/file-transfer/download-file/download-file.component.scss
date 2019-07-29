@@ -1,0 +1,28 @@
+@import '../../../variables.scss';
+
+.required {
+	color: red;
+}
+
+table {
+	width: 100%;
+	border-collapse: collapse;
+
+	tr:nth-of-type(even) {
+		background-color: #f7f7f7;
+	}
+	th {
+		background: $primary-color;
+		color: white;
+		font-weight: bold;
+	}
+	td,
+	th {
+		padding: 10px;
+		border: 1px solid #ccc;
+		text-align: center;
+	}
+	td:last-child {
+		text-align: center;
+	}
+}

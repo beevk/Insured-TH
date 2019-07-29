@@ -1,23 +1,79 @@
-<div class="center">
-    <ngx-file-drop dropZoneLabel="Drop files here" (onFileDrop)="dropped($event)" 
-    (onFileOver)="fileOver($event)" (onFileLeave)="fileLeave($event)">
-        <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
-          Optional custom content that replaces the the entire default content.
-          <button type="button" (click)="openFileSelector()">Browse Files</button>
-        </ng-template>
-    </ngx-file-drop>
-    <div class="upload-table">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                </tr>
-            </thead>
-            <tbody class="upload-name-style">
-                <tr *ngFor="let item of files; let i=index">
-                    <td><strong>{{ item.relativePath }}</strong></td>
-                </tr>
-            </tbody>
-        </table>
+<div class="center container">
+    <div class="dropzone"
+        appDropZone
+        (hovered)="toggleHover($event)"
+        (dropped)="prepareUpload($event)"
+        [class.hovering]="isHovering"
+    >
+        <h3>Please Drop your files here!</h3>
+        <p>Drag and drop a File</p>
+        <div class="file">
+            <label class="file-label">
+                <input class="button" style="display: none;" type="file" (change)="prepareUpload($event.target.files)">
+
+                <span class="file-cta">
+                    <span class="file-icon">
+                        <i class="fa fa-upload"></i>
+                    </span>
+                    <span class="file-label button">
+                        Or Choose a File...
+                    </span>
+                    <span *ngIf="fileDropped" class="show-filename">
+                        {{completeFileName}}
+                    </span>
+                </span>
+            </label>
+        </div>
+    </div>
+
+    <div class="progress-bar" *ngIf="(uploadPercentage | async) as pct">
+        <progress [value]="pct" max="100"></progress>
+    </div>
+
+    <div class="uploaded-size" *ngIf="(snapshot | async) as snap">
+        {{snap.bytesTransferred | fileSize }} of {{ snap.totalBytes | fileSize }}
+
+        <span *ngIf="!downloadURL">
+            <button class="button" *ngIf="!paused" (click)="task.pause(); paused = !paused;" [disabled]="!isActive(snap)">Pause</button>
+            <button class="button" *ngIf="paused" (click)="task.resume()" [disabled]="!(snap?.state === 'paused')">Resume</button>
+            <button class="button" (click)="task.cancel()" [disabled]="!isActive(snap)">Cancel</button>
+        </span>
+        <p *ngIf="downloadURL">
+            Upload completed Successfully! You can click <a href="{{downloadURL}}" target="_blank"> <span class="url">here</span></a> to download your file.
+        </p>
+    </div>
+
+    <div class="form-group">
+        <div class="ng-autocomplete makeDropdown">
+          Select related Brand to upload the file: <span class="required">*</span>
+          <ng-autocomplete #brandRef
+            [data]="brandList"
+            [searchKeyword]="'default_name'"
+            (selected)="selectBrand($event)"
+            (inputCleared)="clearBrand()"
+            [itemTemplate]="brandTemplate"
+            [notFoundTemplate]="brandNotFoundTemplate"
+            notFoundText="No Match Found"
+            placeHolder="Select Make Year..."
+          >                                 
+          </ng-autocomplete>
+          
+          <ng-template #brandTemplate let-item>
+            <a [innerHTML]="item.default_name"></a>
+          </ng-template>
+
+          <ng-template #brandNotFoundTemplate let-notFound>
+            <div [innerHTML]="notFound"></div>
+          </ng-template>
+        </div>
+    </div>
+
+    <div class="buttons">
+        <span class="submit">
+            <button type="submit" class="button" [disabled]="!isValid()" (click)="startUpload()">Upload</button>
+        </span>
+        <span class="cancel mt-25">
+            <button type="reset" class="button" (click)="clearFile()">Clear File</button>
+        </span>
     </div>
 </div>

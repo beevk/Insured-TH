@@ -4,6 +4,7 @@ import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { OptionsService } from '../shared/options.service';
 
 import { IBrand, IModel, IMake, IInputError } from '../shared/models/index.interface';
+import { IFormData } from '../shared/models/form-data.interface';
 
 @Component({
   selector: 'app-search-form',
@@ -27,19 +28,19 @@ export class SearchFormComponent implements OnInit {
     make: false
   }
 
-  searchKeyword = {
+  searchKeyword: IFormData<string> = {
     brand: 'default_name',
     model: 'model_group',
     make: 'year_model'
   };
 
-  isLoading = {
+  isLoading: IFormData<string> = {
     brand: '',
     model: '',
     make: ''
   };
 
-  private selected = {
+  private selected: IFormData<{}> = {
     // set it to type IBrand, IModel & IMake
     brand: {},
     model: {},

@@ -2,90 +2,90 @@
 
 .card {
 	position: relative;
-    display: flex;
-    min-width: 0;
-    word-wrap: break-word;
-    background-color: #fff;
-    background-clip: border-box;
+	display: flex;
+	min-width: 0;
+	word-wrap: break-word;
+	background-color: #fff;
+	background-clip: border-box;
 	border-top: 4px solid $primary-color;
 	border-radius: 0 0 .25rem .25rem;
-	box-shadow: 0 6px 12px rgba(0,0,0,.175);
+	box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
 	margin-bottom: 30px;
 	font-size: 1rem;
-    font-weight: 300;
+	font-weight: 300;
 	color: #6d6a6a;
 	text-align: center;
-	
-	.title{
+
+	.title {
 		color: #111;
 		margin-bottom: 1rem;
 		font-size: 1.2rem;
 	}
 
-	.card-body{
+	.card-body {
 		flex: 1 1 auto;
 		padding: 1.35rem;
 	}
-	.price span{
+	.price span {
 		color: #000000;
 	}
-	hr{
+	hr {
 		margin-top: 1.3rem;
 		margin-bottom: 1.3rem;
 		border: 0;
-		border-top: 1px solid rgba(0,0,0,.1);
+		border-top: 1px solid rgba(0, 0, 0, .1);
 	}
 }
 
-.card-header{
-
-	.desc{
+.card-header {
+	.desc {
 		font-weight: 400;
 		font-size: 1.5rem;
 	}
 }
 
-@media screen and (min-width:0px) {
-	.card .row-flex{
+@media screen and (min-width: 0px) {
+	.card .row-flex {
 		flex-direction: column;
 	}
 
-	.card .value{
+	.card .value {
 		margin-bottom: 1rem;
 
-		.insured{
+		.insured {
 			margin-right: 15px;
 			margin-bottom: 1.5rem;
 
-			.insured-date:not(:last-child), .insured-sum:not(:last-child){
+			.insured-date:not(:last-child),
+			.insured-sum:not(:last-child) {
 				margin-right: 0;
 				margin-bottom: 10px;
 			}
-			.insured-date div:first-child, .insured-sum div:first-child{
+			.insured-date div:first-child,
+			.insured-sum div:first-child {
 				color: #000000;
 			}
 		}
 	}
 }
 
-@media screen and (min-width:556px) {
-	.card .row-flex{
+@media screen and (min-width: 556px) {
+	.card .row-flex {
 		flex-direction: row;
 	}
 
-	.card .value{
-
-		.insured{
-
-			.insured-date:not(:last-child), .insured-sum:not(:last-child){
+	.card .value {
+		.insured {
+			.insured-date:not(:last-child),
+			.insured-sum:not(:last-child) {
 				margin-right: 25px;
 			}
 		}
 	}
 }
 
-@media screen and (min-width:991px) {
-	.card{
+@media screen and (min-width: 991px) {
+	.card {
 		width: 70%;
 		margin: auto;
 		margin-bottom: 50px;
@@ -93,13 +93,13 @@
 }
 
 @media print {
-	.card{
+	.card {
 		display: block;
 		box-shadow: 0 0 1px rgba($color: #000000, $alpha: 0.09);
 		margin-top: 15px;
-		
-		&:nth-of-type(3n){
-			page-break-after: always;
-		}	
+
+		&:nth-of-type(4n) {
+			page-break-before: always;
+		}
 	}
 }

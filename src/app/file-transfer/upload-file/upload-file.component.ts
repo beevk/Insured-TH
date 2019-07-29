@@ -1,6 +1,13 @@
 import { Component, OnInit } from '@angular/core';
+// import { HttpEventType } from '@angular/common/http';
 
-import { NgxFileDropEntry, FileSystemFileEntry, FileSystemDirectoryEntry } from 'ngx-file-drop';
+import { AngularFireStorage, AngularFireUploadTask } from '@angular/fire/storage';
+
+import { OptionsService } from 'src/app/shared/options.service';
+import { IBrand } from 'src/app/shared/models/brand.interface';
+import { TransferService } from '../shared/transfer.service';
+import { Observable } from 'rxjs';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-upload-file',
@@ -8,54 +15,111 @@ import { NgxFileDropEntry, FileSystemFileEntry, FileSystemDirectoryEntry } from 
   styleUrls: ['./upload-file.component.scss']
 })
 export class UploadFileComponent implements OnInit {
-  public files: NgxFileDropEntry[] = [];
+  brandList: IBrand[];
+  brandId: number;
+  task: AngularFireUploadTask;
+  uploadPercentage: Observable<number>;
+  snapshot: Observable<any>;
+  downloadURL: Observable<string>;
+  isHovering: boolean;
+  fileDropped: boolean;
+  completeFileName: string;
+  paused: boolean = false;
 
-  constructor() { }
+  private fileName: string;
+  private newFileName: number;
+  private fileExtension: string;
+  private file: File;
+
+  constructor(private options: OptionsService, private storage: AngularFireStorage, private ft: TransferService) { }
 
   ngOnInit() {
-  }
-
-  public dropped(files: NgxFileDropEntry[]) {
-    this.files = files;
-    for (const droppedFile of files) {
-
-      // Checks if it is it a file?
-      if (droppedFile.fileEntry.isFile) {
-        const fileEntry = droppedFile.fileEntry as FileSystemFileEntry;
-        fileEntry.file((file: File) => {
-
-          // Here you can access the real file
-          console.log(droppedFile.relativePath, file);
-
-          /**
-          // You could upload it like this or call a service
-          const formData = new FormData()
-          formData.append('logo', file, relativePath)
- 
-          // Headers
-          const headers = new HttpHeaders({
-            'security-token': 'mytoken'
-          })
- 
-          this.http.post('https://mybackend.com/api/upload/sanitize-and-save-logo', formData, { headers: headers, responseType: 'blob' })
-          .subscribe(data => {
-            // Sanitized logo returned from backend
-          })
-          **/
-        });
+    this.options.listBrands().subscribe(data => {
+      if (data['status']) {
+        this.brandList = <IBrand[]>data['return_value'];
       } else {
-        // It was a directory (empty directories are added, otherwise only files)
-        const fileEntry = droppedFile.fileEntry as FileSystemDirectoryEntry;
-        console.log(droppedFile.relativePath, fileEntry);
+        // Handle Errors
+        console.error('Error Fetching from HTTP -', data);
       }
+    })
+  }
+
+  selectBrand(brand) {
+    this.brandId = brand.record_id;
+    console.log("Value set: ", this.brandId);
+  }
+
+  clearBrand() {
+    this.brandId = undefined;
+  }
+
+  toggleHover(event: boolean) {
+
+  }
+
+  prepareUpload(event: FileList) {
+    this.downloadURL = undefined;
+    this.fileDropped = true;
+    this.file = event.item(0);
+    this.fileName = this.file.name.split('.').slice(0, -1).join('.')
+    this.newFileName = this.generateName();
+    this.fileExtension = this.getFileExtension(this.file.name);
+    this.completeFileName = this.fileName + '.' + this.fileExtension;
+  }
+
+  isActive(snapshot) {
+    return snapshot.state === 'running' && snapshot.bytesTransferred < snapshot.totalBytes;
+  }
+
+  startUpload() {
+    // The storage path - Replace test with brandId
+    const path = `${this.brandId}/${this.newFileName}.${this.fileExtension}`;
+
+    // This uploads the file to Firebase
+    this.task = this.storage.upload(path, this.file);
+
+    this.uploadPercentage = this.task.percentageChanges();
+    this.snapshot = this.task.snapshotChanges();
+    const fileRef = this.storage.ref(path);
+    // this.downloadURL = this.task.getDownloadURL()
+
+    this.task.snapshotChanges().pipe(
+      finalize(() => {
+        fileRef.getDownloadURL().subscribe(url => this.downloadURL = url);
+        this.uploadFileRecord();
+      })
+    ).subscribe();
+
+  }
+
+  clearFile() {
+    this.file = undefined;
+    this.fileDropped = undefined;
+    this.newFileName = undefined;
+    this.completeFileName = undefined;
+  }
+
+  uploadFileRecord() {
+    this.ft.uploadFileRecord(this.brandId, this.fileName, this.fileExtension, this.newFileName)
+      .subscribe(() => {
+        this.fileDropped = false;
+      });
+  }
+
+  isValid(): boolean {
+    return (this.brandId && this.fileDropped);
+  }
+
+  private getFileExtension(fileName: string) {
+    let a = fileName.split(".");
+    if (a.length === 1 || (a[0] === "" && a.length === 2)) {
+      return "";
     }
+    return a.pop();
   }
 
-  public fileOver(event) {
-    console.log(event);
-  }
-
-  public fileLeave(event) {
-    console.log(event);
+  private generateName(): number {
+    const timeStamp = Date.now().toString() + Math.floor(1000 + Math.random() * 9000).toString();
+    return parseInt(timeStamp, 10);
   }
 }

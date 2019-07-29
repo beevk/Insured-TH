@@ -1,0 +1,41 @@
+@import '../../../variables.scss';
+
+.dropzone {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	font-weight: 200;
+	height: 300px;
+	border: 2px dashed $primary-color;
+	border-radius: 5px;
+	background: #fff;
+	margin: 10px 0;
+
+	&.hovering {
+		border: 2px solid $primary-color;
+		color: #dadada !important;
+	}
+
+	.file-label {
+		display: block;
+		padding: 6px;
+		margin-top: 10px; // font-size: 1.2em;
+		text-align: center;
+	}
+
+	.show-filename {
+		color: red;
+	}
+}
+
+progress::-webkit-progress-value {
+	transition: width 0.1s ease;
+}
+
+.required {
+	color: red;
+}
+.url {
+	color: $primary-color;
+}

@@ -23,6 +23,7 @@ import { TableComponent } from './UI/table/table.component';
 	declarations: [AppComponent, ListInsuranceComponent, ScreenCheckedPipe, SearchFormComponent, LandingPageComponent, PageNotFoundComponent, CardsComponent, TableComponent],
 	imports: [BrowserModule, AppRoutingModule, ReactiveFormsModule, HttpClientModule, AutocompleteLibModule, FileTransferModule],
 	providers: [{ provide: HTTP_INTERCEPTORS, useClass: BaseUrlInterceptor, multi: true }],
-	bootstrap: [AppComponent]
+	bootstrap: [AppComponent],
+	exports: [AutocompleteLibModule]
 })
 export class AppModule { }

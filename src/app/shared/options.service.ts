@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 
@@ -10,7 +10,7 @@ export class OptionsService {
   constructor(private http: HttpClient) { }
 
   listBrands(): Observable<Object> {
-    let options = {
+    const options = {
       'query_name': 'brand_get',
       'company_rid': 1,
       'record_id': null
@@ -22,7 +22,7 @@ export class OptionsService {
   }
 
   listModels(brand: string): Observable<Object> {
-    let options = {
+    const options = {
       'query_name': 'model_group_get',
       'company_rid': 1,
       'brand_code': brand,
@@ -35,7 +35,7 @@ export class OptionsService {
   }
 
   listMakeYears(brandId: number, model: string): Observable<Object> {
-    let options = {
+    const options = {
       'query_name': 'model_year_get',
       'company_rid': 1,
       'brand_rid': brandId,
@@ -48,7 +48,7 @@ export class OptionsService {
   }
 
   listInsurance(brandId: number, model: string, make: string): Observable<Object> {
-    let options = {
+    const options = {
       'query_name': 'brand_model_year_sum_insure_get',
       'company_rid': 1,
       'brand_rid': brandId,
@@ -57,7 +57,7 @@ export class OptionsService {
     }
 
     return this.http.post(`Get`, null, {
-      params: { "id": JSON.stringify(options) }
+      params: { id: JSON.stringify(options) }
     });
   }
 }
