@@ -31,7 +31,12 @@
     <h3>Empty page filler image</h3>
 </div>
 
-<div *ngIf="downloadList !== undefined" class="table-data">
+<div class="no-result" *ngIf="noFileFound">
+    <p>No files were found under this category.</p>
+    <p>Please select a new Category.</p>
+</div>
+
+<div *ngIf="downloadList !== undefined && !noFileFound" class="table-data">
     <table>
         <thead>
             <tr>

@@ -6,7 +6,6 @@ import { OptionsService } from 'src/app/shared/options.service';
 import { IBrand } from 'src/app/shared/models/brand.interface';
 import { TransferService } from '../shared/transfer.service';
 import { IFileDetails } from '../shared/file-details.interface';
-import { Observable } from 'rxjs/internal/Observable';
 
 @Component({
   selector: 'app-download-file',
@@ -17,6 +16,7 @@ export class DownloadFileComponent implements OnInit {
   brandList: IBrand[];
   brandId: number;
   downloadList: IFileDetails[];
+  noFileFound: boolean;
 
   constructor(private options: OptionsService, private storage: AngularFireStorage, private transfer: TransferService) { }
 
@@ -33,7 +33,6 @@ export class DownloadFileComponent implements OnInit {
 
   selectBrand(brand) {
     this.brandId = brand.record_id;
-    console.log("Value set: ", this.brandId);
   }
 
   clearBrand() {
@@ -44,7 +43,13 @@ export class DownloadFileComponent implements OnInit {
     this.transfer.fetchAllFilesRecord(this.brandId).subscribe((list) => {
       if (list['return_status'] === "success") {
         this.downloadList = list['return_value'];
-        this.addDownloadLink(this.downloadList);
+        if (this.downloadList) {
+          this.noFileFound = false;
+          this.addDownloadLink(this.downloadList);
+        } else {
+          this.noFileFound = true;
+        }
+
       }
       else {
         this.downloadList = undefined;
