@@ -46,7 +46,6 @@ export class UploadFileComponent implements OnInit {
 
   selectBrand(brand) {
     this.brandId = brand.record_id;
-    console.log("Value set: ", this.brandId);
   }
 
   clearBrand() {
@@ -54,7 +53,7 @@ export class UploadFileComponent implements OnInit {
   }
 
   toggleHover(event: boolean) {
-
+    this.isHovering = event;
   }
 
   prepareUpload(event: FileList) {

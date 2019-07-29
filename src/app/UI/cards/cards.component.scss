@@ -26,9 +26,11 @@
 		flex: 1 1 auto;
 		padding: 1.35rem;
 	}
+
 	.price span {
 		color: #000000;
 	}
+
 	hr {
 		margin-top: 1.3rem;
 		margin-bottom: 1.3rem;
@@ -67,6 +69,10 @@
 			}
 		}
 	}
+}
+
+.margin-top-25 {
+	margin-top: 25px;
 }
 
 @media screen and (min-width: 556px) {

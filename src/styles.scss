@@ -1,4 +1,5 @@
 @import "./variables";
+@import url('https://fonts.googleapis.com/css?family=Kanit|Nunito&display=swap');
 
 *,
 *::before,
@@ -6,6 +7,17 @@
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
+}
+
+body {
+	font-family: 'Nunito', sans-serif;
+
+	h1,
+	h2,
+	h3,
+	h4 {
+		font-family: 'Kanit', sans-serif;
+	}
 }
 
 a {
@@ -44,62 +56,35 @@ ol {
 	}
 }
 
+.button-transparent {
+	border: 0;
+	padding: 3px 15px;
+	background-color: transparent;
+	text-decoration: underline;
+	cursor: pointer;
+	outline: 0;
+
+	&:hover {
+		color: $primary-color;
+	}
+	&:focus {
+		color: $primary-color;
+	}
+}
+
 .position-relative {
 	position: relative;
 }
 /* flex box */
 .row-flex {
-	display: -webkit-box;
-	display: -moz-box;
-	display: -ms-flexbox;
-	display: -moz-flex;
-	display: -webkit-flex;
 	display: flex;
-	-webkit-flex-wrap: wrap;
 	flex-wrap: wrap;
 }
 .column-flex {
-	display: -webkit-box;
-	display: -moz-box;
-	display: -ms-flexbox;
-	display: -moz-flex;
-	display: -webkit-flex;
 	display: flex;
 	flex-direction: column;
 }
-.flex-10 {
-	flex: .1;
-}
-.flex-15 {
-	flex: .15;
-}
-.flex-20 {
-	flex: .2;
-}
-.flex-30 {
-	flex: .3;
-}
-.flex-40 {
-	flex: .4;
-}
-.flex-50 {
-	flex: .5;
-}
-.flex-60 {
-	flex: .6;
-}
-.flex-70 {
-	flex: .7;
-}
-.flex-80 {
-	flex: .8;
-}
-.flex-90 {
-	flex: .9;
-}
-.flex-100 {
-	flex: 1;
-}
+
 .flex-space-between {
 	justify-content: space-between;
 }
@@ -140,6 +125,9 @@ ol {
 	align-self: flex-start;
 }
 
+.ng-autocomplete {
+	width: auto !important;
+}
 /* You can add global styles to this file, and also import other style files */
 .autocomplete-container .suggestions-container.is-visible {
 	top: 100%;
@@ -261,18 +249,23 @@ form .autocomplete-container .input-container input {
 	.card {
 		-webkit-print-color-adjust: exact !important;
 	}
+
 	header {
 		display: none;
 	}
+
 	.formContainer {
 		display: none;
 	}
+
 	.view-and-print {
 		display: none;
 	}
+
 	#insurance-report {
 		display: block;
 	}
+
 	.insurance-inner-wrap {
 		display: none;
 	}

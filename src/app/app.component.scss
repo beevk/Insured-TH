@@ -1,5 +1,4 @@
 header {
-	padding: 10px 20px;
 	background-color: #404040;
 	box-shadow: 0 0 10px rgba($color: #000000, $alpha: 0.2);
 
@@ -16,6 +15,11 @@ header {
 		a {
 			color: #f7f7f7;
 		}
+
+		nav {
+			line-height: 1.7;
+		}
+
 		nav a {
 			color: #999;
 

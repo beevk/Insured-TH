@@ -1,16 +1,50 @@
 @import '../../../variables.scss';
 
+.upload-wrapper {
+	.upload-inner-wrap {
+		padding: 60px 0;
+		background-color: $primary-color;
+		box-shadow: 0 0 30px rgba($color: #000000, $alpha: 0.13);
+
+		.upload-box {
+			background-color: #fff;
+			margin: auto;
+			border-radius: 5px;
+			box-shadow: 0 0 40px rgba($color: #000000, $alpha: 0.2);
+
+			.ng-autocomplete {
+				width: auto;
+			}
+			.uploaded-size {
+				margin-bottom: 10px;
+
+				.file-size {
+					font-size: 14px;
+					font-weight: 300;
+					margin: 10px 0;
+				}
+			}
+		}
+	}
+}
+
+.upload-filter-wrap {
+	justify-content: space-between;
+	align-items: flex-end;
+}
+
 .dropzone {
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	flex-direction: column;
 	font-weight: 200;
-	height: 300px;
+	height: 250px;
 	border: 2px dashed $primary-color;
 	border-radius: 5px;
-	background: #fff;
 	margin: 10px 0;
+	text-align: center;
+	margin-bottom: 20px;
 
 	&.hovering {
 		border: 2px solid $primary-color;
@@ -22,20 +56,122 @@
 		padding: 6px;
 		margin-top: 10px; // font-size: 1.2em;
 		text-align: center;
+
+		&.button {
+			padding: 0;
+			min-width: 0;
+			height: auto;
+			background: none;
+			color: #000000;
+			padding-bottom: 5px;
+			border: none;
+			border-bottom: 1px solid #000000;
+		}
 	}
 
 	.show-filename {
-		color: red;
+		color: $primary-color;
 	}
 }
 
-progress::-webkit-progress-value {
-	transition: width 0.1s ease;
+// upload progress bar
+.progress-bar {
+	progress {
+		/* Reset the default appearance */
+		-webkit-appearance: none;
+		appearance: none;
+		vertical-align: top;
+		height: 8px;
+		border-radius: 3px;
+		overflow: hidden;
+		width: 100%;
+
+		&::-moz-progress-bar,
+		&::-webkit-progress-value {
+			background: $primary-color;
+			border: 1px solid $primary-color;
+			border-radius: 3px;
+			background-size: 35px 20px, 100% 100%, 100% 100%;
+			transition: width .4s ease-in;
+		}
+	}
 }
 
 .required {
 	color: red;
 }
+
 .url {
 	color: $primary-color;
+}
+
+@media screen and (min-width: 0px) {
+	.upload-wrapper {
+		padding: 20px 0;
+
+		.upload-inner-wrap {
+			padding: 20px 0;
+
+			.upload-box {
+				width: 95%;
+
+				.upload-box-inner {
+					padding: 20px;
+				}
+			}
+
+			.form-group {
+				margin-bottom: 15px;
+			}
+		}
+	}
+
+	.upload-filter-wrap {
+		width: 100%;
+
+		.buttons {
+			margin-bottom: 20px;
+
+			.button {
+				min-width: 150px;
+			}
+		}
+	}
+}
+
+@media screen and (min-width: 776px) {
+	.upload-wrapper {
+		.upload-inner-wrap {
+			padding: 50px 0;
+
+			.upload-box {
+				width: 80%;
+			}
+		}
+	}
+}
+
+@media screen and (min-width: 991px) {
+	.upload-wrapper {
+		padding: 40px 0;
+
+		.upload-inner-wrap {
+			padding: 60px 0;
+
+			.upload-box {
+				padding: 30px;
+				width: 70%;
+			}
+		}
+	}
+}
+
+@media screen and (min-width: 1280px) {
+	.upload-wrapper {
+		.upload-inner-wrap {
+			.upload-box {
+				width: 60%;
+			}
+		}
+	}
 }

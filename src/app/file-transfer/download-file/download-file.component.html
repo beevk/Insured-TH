@@ -1,60 +1,72 @@
-<div class="form-group">
-    <div class="ng-autocomplete makeDropdown">
-        Select related Brand to download file: <span class="required">*</span>
-        <ng-autocomplete #brandRef
-        [data]="brandList"
-        [searchKeyword]="'default_name'"
-        (selected)="selectBrand($event)"
-        (inputCleared)="clearBrand()"
-        [itemTemplate]="brandTemplate"
-        [notFoundTemplate]="brandNotFoundTemplate"
-        notFoundText="No Match Found"
-        placeHolder="Select Make Year..."
-        >                                 
-        </ng-autocomplete>
-        
-        <ng-template #brandTemplate let-item>
-        <a [innerHTML]="item.default_name"></a>
-        </ng-template>
-
-        <ng-template #brandNotFoundTemplate let-notFound>
-        <div [innerHTML]="notFound"></div>
-        </ng-template>
+<div class="download-form-container">
+    <div class="container">
+        <div class="download-form-inner row-flex">
+            <div class="form-group">
+                <div class="ng-autocomplete makeDropdown">
+                    <p class="label">Select related Brand to download file: <span class="required">*</span></p>
+                    <ng-autocomplete #brandRef
+                    [data]="brandList"
+                    [searchKeyword]="'default_name'"
+                    (selected)="selectBrand($event)"
+                    (inputCleared)="clearBrand()"
+                    [itemTemplate]="brandTemplate"
+                    [notFoundTemplate]="brandNotFoundTemplate"
+                    notFoundText="No Match Found"
+                    placeHolder="Select Make Year..."
+                    >                                 
+                    </ng-autocomplete>
+                    
+                    <ng-template #brandTemplate let-item>
+                    <a [innerHTML]="item.default_name"></a>
+                    </ng-template>
+            
+                    <ng-template #brandNotFoundTemplate let-notFound>
+                    <div [innerHTML]="notFound"></div>
+                    </ng-template>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <button (click)="fetchRecord()" class="button" [disabled]="brandId === undefined">Fetch Files</button>
+            </div>
+        </div>
     </div>
 </div>
 
-<div class="form-group">
-    <button (click)="fetchRecord()" class="button" [disabled]="brandId === undefined">Fetch Files</button>
+<div class="download-list-wrap">
+    <div class="container">
+        <div class="download-list-inner">
+            <div class="filler-image" *ngIf="downloadList === undefined">
+                    
+            </div>
+                
+            <div class="no-result" *ngIf="noFileFound">
+                <p>No files were found under this category.</p>
+                <p>Please select a new Category.</p>
+            </div>
+            
+            <div *ngIf="downloadList !== undefined && !noFileFound" class="table-data">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Original Filename</th>
+                            <th>New Filename</th>
+                            <th>File Extension</th>
+                            <th>Download File</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of downloadList">
+                            <td data-label="Original Filename"> {{item.original_filename}} </td>
+                            <td data-label="New Filename"> {{item.new_filename}} </td>
+                            <td data-label="File Extension"> {{item.original_file_extension}} </td>
+                            <td data-label="Download File"><a href="{{item.fileURL}}" class="button-transparent" target="_blank"> {{item.original_filename}} </a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <a (click)="fetchIndividual($event)"></a>
+        </div>
+    </div>
 </div>
-
-<div class="filler-image" *ngIf="downloadList === undefined">
-    <h3>Empty page filler image</h3>
-</div>
-
-<div class="no-result" *ngIf="noFileFound">
-    <p>No files were found under this category.</p>
-    <p>Please select a new Category.</p>
-</div>
-
-<div *ngIf="downloadList !== undefined && !noFileFound" class="table-data">
-    <table>
-        <thead>
-            <tr>
-                <th>Original Filename</th>
-                <th>New Filename</th>
-                <th>File Extension</th>
-                <th>Download File</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let item of downloadList">
-                <td> {{item.original_filename}} </td>
-                <td> {{item.new_filename}} </td>
-                <td> {{item.original_file_extension}} </td>
-                <td><a href="{{item.fileURL}}" target="_blank" style="color: red;" class="button"> {{item.original_filename}} </a></td>
-            </tr>
-        </tbody>
-    </table>
-</div>
-
-<a (click)="fetchIndividual($event)"></a>
