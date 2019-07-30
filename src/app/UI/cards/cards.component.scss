@@ -100,12 +100,35 @@
 
 @media print {
 	.card {
-		display: block;
-		box-shadow: 0 0 1px rgba($color: #000000, $alpha: 0.09);
-		margin-top: 15px;
+		position: static !important;
+		float: none !important;
+		border: 1px solid #ccc;
+		color: #6d6a6a;
+		-webkit-print-text-size-adjust: 14px;
+		box-shadow: none;
+		margin-bottom: 20px;
 
-		&:nth-of-type(4n) {
-			page-break-before: always;
+		&:nth-child(3n) {
+			// break-after: always;
+			page-break-after: always;
+		}
+	}
+	.card .value {
+		margin-bottom: 0;
+
+		.insured {
+			margin-right: 15px;
+			margin-bottom: 0;
+
+			.insured-date:not(:last-child),
+			.insured-sum:not(:last-child) {
+				margin-right: 25px;
+				margin-bottom: 10px;
+			}
+			.insured-date div:first-child,
+			.insured-sum div:first-child {
+				color: #000000;
+			}
 		}
 	}
 }
