@@ -1,5 +1,5 @@
 export interface IFormData<T> {
-    brand: T,
-    model: T,
-    make: T
+    brand: T;
+    model: T;
+    make: T;
 }

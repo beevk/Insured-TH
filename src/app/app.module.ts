@@ -20,10 +20,26 @@ import { CardsComponent } from './UI/cards/cards.component';
 import { TableComponent } from './UI/table/table.component';
 
 @NgModule({
-	declarations: [AppComponent, ListInsuranceComponent, ScreenCheckedPipe, SearchFormComponent, LandingPageComponent, PageNotFoundComponent, CardsComponent, TableComponent],
-	imports: [BrowserModule, AppRoutingModule, ReactiveFormsModule, HttpClientModule, AutocompleteLibModule, FileTransferModule],
-	providers: [{ provide: HTTP_INTERCEPTORS, useClass: BaseUrlInterceptor, multi: true }],
-	bootstrap: [AppComponent],
-	exports: [AutocompleteLibModule]
+    declarations: [
+        AppComponent,
+        ListInsuranceComponent,
+        ScreenCheckedPipe,
+        SearchFormComponent,
+        LandingPageComponent,
+        PageNotFoundComponent,
+        CardsComponent,
+        TableComponent
+    ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        ReactiveFormsModule,
+        HttpClientModule,
+        AutocompleteLibModule,
+        FileTransferModule
+    ],
+    providers: [{ provide: HTTP_INTERCEPTORS, useClass: BaseUrlInterceptor, multi: true }],
+    bootstrap: [AppComponent],
+    exports: [AutocompleteLibModule]
 })
 export class AppModule { }

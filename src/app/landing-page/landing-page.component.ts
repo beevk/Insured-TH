@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./landing-page.component.scss']
 })
 export class LandingPageComponent implements OnInit {
-  salesValueReceived: boolean = false;
+  salesValueReceived = false;
   formInfo: any;
 
   constructor() { }

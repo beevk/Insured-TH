@@ -7,15 +7,15 @@ import { DownloadFileComponent } from './file-transfer/download-file/download-fi
 import { PageNotFoundComponent } from './errors/page-not-found.component';
 
 const routes: Routes = [
-	{ path: '', component: LandingPageComponent },
-	{ path: 'upload', component: UploadFileComponent },
-	{ path: 'download', component: DownloadFileComponent },
-	{ path: '**', component: PageNotFoundComponent }
+    { path: '', component: LandingPageComponent },
+    { path: 'upload', component: UploadFileComponent },
+    { path: 'download', component: DownloadFileComponent },
+    { path: '**', component: PageNotFoundComponent }
 ];
 
 @NgModule({
-	imports: [RouterModule.forRoot(routes)],
-	exports: [RouterModule]
+    imports: [RouterModule.forRoot(routes)],
+    exports: [RouterModule]
 })
 export class AppRoutingModule { }
 

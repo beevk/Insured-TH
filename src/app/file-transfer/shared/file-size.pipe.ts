@@ -10,6 +10,6 @@ export class FileSizePipe implements PipeTransform {
     if (fileSizeInKB < 1024) {
       return `${fileSizeInKB.toFixed(2)} KB`;
     }
-    return `${(fileSizeInKB / 1024).toFixed(2)} MB`
+    return `${(fileSizeInKB / 1024).toFixed(2)} MB`;
   }
 }

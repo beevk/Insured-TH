@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 
 @Injectable()
 export class BaseUrlInterceptor implements HttpInterceptor {
-    private baseUrl: string = 'http://test.narendragupta.com/api/Values';
+    private baseUrl = 'http://test.narendragupta.com/api/Values';
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         // Change modifiedRequest and forward it to the next interceptor/Server

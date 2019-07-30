@@ -13,10 +13,10 @@ describe('OptionsService', () => {
       imports: [HttpClientTestingModule],
       providers: [OptionsService],
 
-    })
+    });
     service = TestBed.get(OptionsService);
     httpTestingController = TestBed.get(httpTestingController);
-  })
+  });
 
 
   // it('should be created', () => {

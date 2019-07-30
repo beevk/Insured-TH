@@ -1,4 +1,4 @@
 export interface IModel {
-	'brand_rid': number;
-	'model_group': string;
+    'brand_rid': number;
+    'model_group': string;
 }

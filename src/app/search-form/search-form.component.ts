@@ -2,9 +2,7 @@ import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/cor
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 
 import { OptionsService } from '../shared/options.service';
-
-import { IBrand, IModel, IMake, IInputError } from '../shared/models/index.interface';
-import { IFormData } from '../shared/models/form-data.interface';
+import { IBrand, IModel, IMake, IInputError, IFormData } from '../shared/models/index.interface';
 
 @Component({
   selector: 'app-search-form',
@@ -21,12 +19,12 @@ export class SearchFormComponent implements OnInit {
   modelList: IModel[];
   makeList: IMake[];
   queryForm: FormGroup;
-  buttonError: boolean = false;
+  buttonError = false;
   inputError: IInputError = {
     brand: false,
     model: false,
     make: false
-  }
+  };
 
   searchKeyword: IFormData<string> = {
     brand: 'default_name',
@@ -56,54 +54,54 @@ export class SearchFormComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.isLoading.brand = "true";
+    this.isLoading.brand = 'true';
     this.options.listBrands().subscribe(data => {
-      if (data['status']) {
-        this.brandList = <IBrand[]>data['return_value'];
-        this.isLoading.brand = "";
+      if (data.status) {
+        this.brandList = data['return_value'] as IBrand[];
+        this.isLoading.brand = '';
       } else {
         // Handle Errors
         console.error('Error Fetching from HTTP -', data);
       }
-    })
+    });
   }
 
 
   fetchModels(brand: any) {
-    this.isLoading.model = "true";
+    this.isLoading.model = 'true';
     this.inputError.brand = false;
-    this.selected = Object.assign({}, this.selected, { brand: brand });
+    this.selected = Object.assign({}, this.selected, { brand });
 
     this.options.listModels(brand.code).subscribe(data => {
-      if (data['status']) {
-        this.modelList = <IModel[]>data['return_value'];
-        this.isLoading.model = "";
+      if (data.status) {
+        this.modelList = data['return_value'] as IModel[];
+        this.isLoading.model = '';
       } else {
         // Handle Errors
         console.error(`Error Fetching from HTTP - ${data}`);
       }
-    })
+    });
   }
 
   fetchMakeYears(model: any) {
-    this.isLoading.make = "true";
+    this.isLoading.make = 'true';
     this.inputError.model = false;
-    this.selected = Object.assign({}, this.selected, { model: model });
+    this.selected = Object.assign({}, this.selected, { model });
 
     this.options.listMakeYears(model.brand_rid, model.model_group).subscribe(data => {
-      if (data['status']) {
-        this.makeList = <IMake[]>data['return_value'];
-        this.isLoading.make = "";
+      if (data.status) {
+        this.makeList = data['return_value'] as IMake[];
+        this.isLoading.make = '';
       } else {
         // Handle Errors
         console.error(`Error Fetching from HTTP - ${data}`);
       }
-    })
+    });
   }
 
   makeSelected(make: any) {
     this.inputError.make = false;
-    this.selected = Object.assign({}, this.selected, { make: make });
+    this.selected = Object.assign({}, this.selected, { make });
   }
 
   onSubmit(finalData: any) {
@@ -114,7 +112,7 @@ export class SearchFormComponent implements OnInit {
     } else if (this.isEmpty(this.selected.make)) {
       this.inputError.make = true;
     } else {
-      let formInfo = {
+      const formInfo = {
         brandId: finalData.brand.record_id,
         model: finalData.make.model,
         make: finalData.make.year_model
@@ -129,13 +127,13 @@ export class SearchFormComponent implements OnInit {
   }
 
   onFocused(val: string) {
-    if (val === "make") {
+    if (val === 'make') {
       if (this.isEmpty(this.selected.model)) {
         this.inputError.model = true;
         if (this.isEmpty(this.selected.brand)) { }
         this.inputError.brand = true;
       }
-    } else if (val === "model") {
+    } else if (val === 'model') {
       if (this.isEmpty(this.selected.brand)) {
         this.inputError.brand = true;
         this.inputError.make = false;
@@ -147,15 +145,15 @@ export class SearchFormComponent implements OnInit {
   }
 
   clearInputField(val: string) {
-    if (val === "model") {
+    if (val === 'model') {
       this.makeRef.clear();
       this.makeList = [];
       this.selected.model = undefined;
-    } else if (val === "brand") {
+    } else if (val === 'brand') {
       this.modelRef.clear();
       this.modelList = [];
       this.selected.brand = undefined;
-    } else if (val === "make") {
+    } else if (val === 'make') {
       this.selected.make = undefined;
     } else {
       this.brandRef.clear();
@@ -176,9 +174,10 @@ export class SearchFormComponent implements OnInit {
   }
 
   isEmpty(obj): boolean {
-    for (let key in obj) {
-      if (obj.hasOwnProperty(key))
+    for (const key in obj) {
+      if (obj.hasOwnProperty(key)) {
         return false;
+      }
     }
     return true;
   }

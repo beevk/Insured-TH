@@ -9,10 +9,10 @@ import { IFormData } from '../shared/models/form-data.interface';
   styleUrls: ['./list-insurance.component.scss']
 })
 export class ListInsuranceComponent implements OnChanges {
-  @Input() info: Pick<IFormData<string>, "make" | "model"> & { brandId: number };
+  @Input() info: Pick<IFormData<string>, 'make' | 'model'> & { brandId: number };
   insuranceList: IInsurance[];
-  isLoading: boolean = true;
-  isCard: boolean = true;
+  isLoading = true;
+  isCard = true;
 
   constructor(private options: OptionsService) {
   }
@@ -20,14 +20,14 @@ export class ListInsuranceComponent implements OnChanges {
   ngOnChanges() {
     this.isLoading = true;
     this.options.listInsurance(this.info.brandId, this.info.model, this.info.make).subscribe(data => {
-      if (!data['status']) {
+      if (!data.status) {
         // Handle Errors
         console.log('Error Fetching data - API:', data);
-        return
+        return;
       }
-      this.insuranceList = <IInsurance[]>data['return_value'];
+      this.insuranceList = data['return_value'] as IInsurance[];
       this.isLoading = false;
-    })
+    });
   }
 
   printPage() {

@@ -24,8 +24,8 @@ export class UploadFileComponent implements OnInit {
   isHovering: boolean;
   fileDropped: boolean;
   completeFileName: string;
-  paused: boolean = false;
-  uploadCancelled: boolean = false;
+  paused = false;
+  uploadCancelled = false;
 
   private fileName: string;
   private newFileName: number;
@@ -36,13 +36,13 @@ export class UploadFileComponent implements OnInit {
 
   ngOnInit() {
     this.options.listBrands().subscribe(data => {
-      if (data['status']) {
-        this.brandList = <IBrand[]>data['return_value'];
+      if (data.status) {
+        this.brandList = data['return_value'] as IBrand[];
       } else {
         // Handle Errors
         console.error('Error Fetching from HTTP -', data);
       }
-    })
+    });
   }
 
   selectBrand(brand) {
@@ -94,7 +94,7 @@ export class UploadFileComponent implements OnInit {
           // this.db.collection('photos').add({ path, size: snap.totalBytes })
         }
       })
-    )
+    );
 
     this.task.snapshotChanges().pipe(
       finalize(() => {
@@ -112,7 +112,7 @@ export class UploadFileComponent implements OnInit {
   }
 
   uploadFileRecord() {
-    console.log("Uploading file record!");
+    console.log('Uploading file record!');
     this.ft.uploadFileRecord(this.brandId, this.fileName, this.fileExtension, this.newFileName)
       .subscribe(() => {
         this.fileDropped = false;
@@ -124,9 +124,9 @@ export class UploadFileComponent implements OnInit {
   }
 
   private getFileExtension(fileName: string) {
-    let a = fileName.split(".");
-    if (a.length === 1 || (a[0] === "" && a.length === 2)) {
-      return "";
+    const a = fileName.split('.');
+    if (a.length === 1 || (a[0] === '' && a.length === 2)) {
+      return '';
     }
     return a.pop();
   }
@@ -138,10 +138,10 @@ export class UploadFileComponent implements OnInit {
 
   private getFileName(name: string, fileExtension: string): string {
     const extLength = fileExtension.length;
-    if (extLength === 0) return name;
+    if (extLength === 0) { return name; }
 
-    for (let i = extLength - 1, j = name.length - 1; i != 0; i-- , j--) {
-      if (name[j] !== fileExtension[i]) return name;
+    for (let i = extLength - 1, j = name.length - 1; i !== 0; i-- , j--) {
+      if (name[j] !== fileExtension[i]) { return name; }
     }
     return name.slice(0, -extLength - 1);
   }

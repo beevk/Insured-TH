@@ -22,13 +22,13 @@ export class DownloadFileComponent implements OnInit {
 
   ngOnInit() {
     this.options.listBrands().subscribe(data => {
-      if (data['status']) {
-        this.brandList = <IBrand[]>data['return_value'];
+      if (data.status) {
+        this.brandList = data['return_value'] as IBrand[];
       } else {
         // Handle Errors
         console.error('Error Fetching data from Server -', data);
       }
-    })
+    });
   }
 
   selectBrand(brand) {
@@ -37,13 +37,13 @@ export class DownloadFileComponent implements OnInit {
 
   clearBrand() {
     this.brandId = undefined;
-    if (this.noFileFound) this.downloadList = undefined;
+    if (this.noFileFound) { this.downloadList = undefined; }
     this.noFileFound = false;
   }
 
   fetchRecord() {
     this.transfer.fetchAllFilesRecord(this.brandId).subscribe((list) => {
-      if (list['return_status'] === "success") {
+      if (list['return_status'] === 'success') {
         this.downloadList = list['return_value'];
         if (this.downloadList) {
           this.noFileFound = false;
@@ -52,8 +52,7 @@ export class DownloadFileComponent implements OnInit {
           this.noFileFound = true;
         }
 
-      }
-      else {
+      } else {
         this.downloadList = undefined;
       }
     });
@@ -65,21 +64,7 @@ export class DownloadFileComponent implements OnInit {
 
       ref.getDownloadURL().subscribe(url => {
         element.fileURL = url.toString();
-      })
-    })
-  }
-
-  downloadFile(url: string) {
-    let blob, newURL;
-    let xhr = new XMLHttpRequest();
-    xhr.responseType = 'blob';
-    xhr.onload = function (event) {
-      blob = xhr.response;
-      newURL = window.URL.createObjectURL(blob);
-    };
-    xhr.open('GET', url);
-    xhr.send();
-
-    console.log(url);
+      });
+    });
   }
 }

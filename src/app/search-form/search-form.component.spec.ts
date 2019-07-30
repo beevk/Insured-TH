@@ -4,7 +4,8 @@ import { SearchFormComponent } from './search-form.component';
 
 describe('SearchFormComponent', () => {
   let component: SearchFormComponent;
-  let mockOptionsService, mockFormBuilder;
+  let mockOptionsService;
+  let mockFormBuilder;
 
   beforeEach(() => {
     mockOptionsService = jasmine.createSpyObj(['listBrands', 'listModels', 'listMakeYears', 'listMakeYears']);
