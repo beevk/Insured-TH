@@ -37,6 +37,8 @@ export class DownloadFileComponent implements OnInit {
 
   clearBrand() {
     this.brandId = undefined;
+    if (this.noFileFound) this.downloadList = undefined;
+    this.noFileFound = false;
   }
 
   fetchRecord() {

@@ -36,12 +36,11 @@
 <div class="download-list-wrap">
     <div class="container">
         <div class="download-list-inner">
-            <div class="no-result" *ngIf="noFileFound">
-                <p>No files were found under this category.</p>
-                <p>Please select a new Category.</p>
-            </div>
-            
             <div class="filler-image" *ngIf="downloadList === undefined || noFileFound">
+                <div class="no-result" *ngIf="noFileFound">
+                    <p>No files were found under this category.</p>
+                    <p>Please select a new Category.</p>
+                </div>
             </div>
                 
             <div *ngIf="downloadList !== undefined && !noFileFound" class="table-data">
@@ -60,8 +59,8 @@
                             <td data-label="New Filename"> {{item.new_filename}} </td>
                             <td data-label="File Extension"> {{item.original_file_extension}} </td>
                             <td data-label="Download File">
-                                <!-- <a href="{{item.fileURL || 'not-found'}}" class="button-transparent" target="_blank"> {{item.original_filename || 'link'}} </a> -->
-                                <button class="button-transparent" (click)="downloadFile(item.fileURL)"> {{item.original_filename || 'link'}} </button>
+                                <a href="{{item.fileURL || 'not-found'}}" class="button-transparent" target="_blank"> {{item.original_filename || 'link'}} </a>
+                                <!-- <button class="button-transparent" (click)="downloadFile(item.fileURL)"> {{item.original_filename || 'link'}} </button> -->
                             </td>
                         </tr>
                     </tbody>
