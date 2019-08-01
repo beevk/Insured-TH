@@ -32,10 +32,10 @@ export class SearchFormComponent implements OnInit {
     make: 'year_model'
   };
 
-  isLoading: IFormData<string> = {
-    brand: '',
-    model: '',
-    make: ''
+  isLoading: IFormData<boolean> = {
+    brand: false,
+    model: false,
+    make: false
   };
 
   private selected: IFormData<{}> = {
@@ -54,11 +54,11 @@ export class SearchFormComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.isLoading.brand = 'true';
+    this.isLoading.brand = true;
     this.options.listBrands().subscribe(data => {
       if (data.status) {
         this.brandList = data['return_value'] as IBrand[];
-        this.isLoading.brand = '';
+        this.isLoading.brand = false;
       } else {
         // Handle Errors
         console.error('Error Fetching from HTTP -', data);
@@ -68,14 +68,14 @@ export class SearchFormComponent implements OnInit {
 
 
   fetchModels(brand: any) {
-    this.isLoading.model = 'true';
+    this.isLoading.model = true;
     this.inputError.brand = false;
     this.selected = Object.assign({}, this.selected, { brand });
 
     this.options.listModels(brand.code).subscribe(data => {
       if (data.status) {
         this.modelList = data['return_value'] as IModel[];
-        this.isLoading.model = '';
+        this.isLoading.model = false;
       } else {
         // Handle Errors
         console.error(`Error Fetching from HTTP - ${data}`);
@@ -84,14 +84,14 @@ export class SearchFormComponent implements OnInit {
   }
 
   fetchMakeYears(model: any) {
-    this.isLoading.make = 'true';
+    this.isLoading.make = true;
     this.inputError.model = false;
     this.selected = Object.assign({}, this.selected, { model });
 
     this.options.listMakeYears(model.brand_rid, model.model_group).subscribe(data => {
       if (data.status) {
         this.makeList = data['return_value'] as IMake[];
-        this.isLoading.make = '';
+        this.isLoading.make = false;
       } else {
         // Handle Errors
         console.error(`Error Fetching from HTTP - ${data}`);

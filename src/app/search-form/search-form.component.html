@@ -18,6 +18,7 @@
             notFoundText="No Match Found"
             placeHolder="Select Brand..."
             required="true"
+            [isLoading]="isLoading.brand"
             (inputCleared)="clearInputField('brand')"
           >                                 
           </ng-autocomplete>
@@ -48,6 +49,7 @@
             [notFoundTemplate]="modelNotFoundTemplate"
             notFoundText="No Match Found"
             placeHolder="Select Model..."
+            [isLoading]="isLoading.model"
             (inputCleared)="clearInputField('model')"
           >                                 
           </ng-autocomplete>
@@ -77,6 +79,7 @@
             [itemTemplate]="makeTemplate"
             [notFoundTemplate]="makeNotFoundTemplate"
             notFoundText="No Match Found"
+            [isLoading]="isLoading.make"
             placeHolder="Select Make Year..."
           >                                 
           </ng-autocomplete>
