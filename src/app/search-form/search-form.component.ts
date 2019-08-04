@@ -130,8 +130,9 @@ export class SearchFormComponent implements OnInit {
     if (val === 'make') {
       if (this.isEmpty(this.selected.model)) {
         this.inputError.model = true;
-        if (this.isEmpty(this.selected.brand)) { }
-        this.inputError.brand = true;
+        if (this.isEmpty(this.selected.brand)) {
+          this.inputError.brand = true;
+        }
       }
     } else if (val === 'model') {
       if (this.isEmpty(this.selected.brand)) {
