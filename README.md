@@ -1,4 +1,4 @@
-# Insured ([DEMO](http://178.128.28.241:4200/))
+# Insured
 
 This is an assignment project that I completed for Angular Dev poistion and is generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.0.4.
 
